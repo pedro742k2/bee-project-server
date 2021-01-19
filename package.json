@@ -1,0 +1,25 @@
+{
+  "name": "bee-project-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedro742k2/bee-project-server.git"
+  },
+  "author": "Pedro Batista",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedro742k2/bee-project-server/issues"
+  },
+  "homepage": "https://github.com/pedro742k2/bee-project-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
