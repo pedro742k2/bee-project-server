@@ -9,6 +9,12 @@ app.use(cors());
 
 let receivedData = [];
 
+app.delete("/delete-data", (req, res) => {
+  receivedData = [];
+
+  res.json("Data was successfully deleted");
+});
+
 app.get("/get-data", (req, res) => {
   res.json(receivedData);
 });
