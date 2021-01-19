@@ -7,18 +7,13 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
-let receivedData = [
-  /* {
-    readDate: "19/01/2021 - 10:51 GMT",
-    data: ["24", "7", "30", "98"],
-  },
-  {
-    readDate: "19/01/2021 - 10:51 GMT",
-    data: ["24", "7", "30", "98"],
-  }, */
-];
+let receivedData = [];
 
-app.get("/data-from-sensor", (req, res) => {
+app.get("/get-data", (req, res) => {
+  res.json(receivedData);
+});
+
+app.post("/data-from-sensor", (req, res) => {
   const { readDate, data } = req.body;
 
   receivedData.push({
