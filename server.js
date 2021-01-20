@@ -4,15 +4,16 @@ const knex = require("knex");
 
 const db = knex({
   client: "pg",
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
+  connection: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   },
 });
 
 const app = express();
 const PORT = process.env.PORT;
-// const PORT = 3000;
 
 app.use(express.json());
 app.use(cors());
