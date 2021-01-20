@@ -57,11 +57,7 @@ app.post("/data-from-sensor", (req, res) => {
     weight,
     battery,
     readings_date,
-  })
-    .into("apiaries")
-    .then((data) => {
-      console.log(data);
-    });
+  }).into("apiaries");
 
   res.send("received");
 });
