@@ -33,8 +33,32 @@ app.post("/get-data", (req, res) => {
 app.post("/data-from-sensor", (req, res) => {
   const { ApHv, readDate, data } = req.body;
 
+  const apiary = ApHv.split("-")[0];
+  const hive = ApHv.split("-")[1];
+
+  const temp = data.split("-")[0];
+  const hmdt = data.split("-")[1];
+  const weight = data.split("-")[2];
+  const battery = data.split("-")[3];
+  const readOn = readDate.split("-");
+  const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
+
   db.select("*")
     .from("apiaries")
+    .then((data) => {
+      console.log(data);
+    });
+
+  db.insert({
+    apiary,
+    hive,
+    temperature: temp,
+    humidity: hmdt,
+    weight,
+    battery,
+    readings_date,
+  })
+    .into("apiaries")
     .then((data) => {
       console.log(data);
     });
