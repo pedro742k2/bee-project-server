@@ -1,33 +1,42 @@
 const express = require("express");
 const cors = require("cors");
+const knex = require("knex");
+
+const db = knex({
+  client: "pg",
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 const app = express();
 const PORT = process.env.PORT;
+// const PORT = 3000;
 
 app.use(express.json());
 app.use(cors());
 
 let receivedData = [];
 
-app.delete("/delete-data", (req, res) => {
-  receivedData = [];
+app.post("/get-data", (req, res) => {
+  const ApHv = req.body.ApHv[0];
 
-  res.json("Data was successfully deleted");
-});
+  const filteredApiaries = receivedData.filter((item) => {
+    return ApHv === item.ApHv;
+  });
 
-app.get("/get-data", (req, res) => {
-  res.json(receivedData);
+  res.json(filteredApiaries);
 });
 
 app.post("/data-from-sensor", (req, res) => {
-  const { readDate, data } = req.body;
+  const { ApHv, readDate, data } = req.body;
 
-  receivedData.push({
-    readDate,
-    data,
-  });
-
-  console.log(receivedData, "\n");
+  db.select("*")
+    .from("apiaries")
+    .then((data) => {
+      console.log(data);
+    });
 
   res.send("received");
 });
