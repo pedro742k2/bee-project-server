@@ -56,8 +56,8 @@ app.post("/data-from-sensor", (req, res) => {
       apiary: apiary,
       hive: hive,
     })
-    .then((data) => {
-      if (data.length >= 1) {
+    .then((checkDate) => {
+      if (checkDate.length >= 1) {
         res.json({
           stored: false,
           msg: "That database already have data for this date",
