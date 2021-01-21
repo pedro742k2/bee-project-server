@@ -62,30 +62,28 @@ app.post("/data-from-sensor", (req, res) => {
     })
     .then((data) => {
       if (data.length >= 1) {
-        console.log("That database already have data for this date");
+        res.json("That database already have data for this date");
       } else {
-        console.log("There are no data for this date");
+        db("apiaries")
+          .insert({
+            apiary,
+            hive,
+            temperature: temp,
+            humidity: hmdt,
+            weight,
+            battery,
+            readings_date,
+          })
+          .into("apiaries")
+          .then(db.commit)
+          .catch(db.rollback);
+
+        res.json("received");
       }
     })
     .catch(() => {
-      console.log("Unable to consult");
+      res.json("Unable to consult");
     });
-
-  db("apiaries")
-    .insert({
-      apiary,
-      hive,
-      temperature: temp,
-      humidity: hmdt,
-      weight,
-      battery,
-      readings_date,
-    })
-    .into("apiaries")
-    .then(db.commit)
-    .catch(db.rollback);
-
-  res.send("received");
 });
 
 app.listen(PORT, () => {
