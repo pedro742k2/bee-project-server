@@ -61,7 +61,7 @@ app.post("/data-from-sensor", (req, res) => {
       hive: hive,
     })
     .then((data) => {
-      if (data) {
+      if (data.length >= 1) {
         console.log("That database already have data for this date");
       } else {
         console.log("There are no data for this date");
