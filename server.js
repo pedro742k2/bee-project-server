@@ -49,15 +49,17 @@ app.post("/data-from-sensor", (req, res) => {
       console.log(data);
     });
 
-  db.insert({
-    apiary,
-    hive,
-    temperature: temp,
-    humidity: hmdt,
-    weight,
-    battery,
-    readings_date,
-  }).into("apiaries");
+  db("apiaries")
+    .insert({
+      apiary,
+      hive,
+      temperature: temp,
+      humidity: hmdt,
+      weight,
+      battery,
+      readings_date,
+    })
+    .into("apiaries");
 
   res.send("received");
 });
