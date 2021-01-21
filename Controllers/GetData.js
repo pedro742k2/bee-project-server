@@ -38,10 +38,12 @@ const handleGetData = (db) => (req, res) => {
           `Unable to get data from Apiary ${ap} - Hive ${hv}\nError: ${error}`
         );
       });
+  } else if (measurementType === "weekly") {
+    res.json("Resource not available yet");
   } else if (measurementType === "monthly") {
     res.json("Resource not available yet");
   } else {
-    res.json("Resource not available yet");
+    res.json("Invalid resource");
   }
 };
 
