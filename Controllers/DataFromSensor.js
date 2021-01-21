@@ -9,10 +9,11 @@ const handleDataFromSensor = (db) => (req, res) => {
 
   const saveDailyData = () => {
     const date = new Date();
-    const day = date.getDay();
+    const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
+    console.log(day, month, year);
     db("apiaries")
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
