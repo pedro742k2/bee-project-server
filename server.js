@@ -25,13 +25,12 @@ app.post("/get-data", (req, res) => {
   const ap = ApHv.split("-")[0];
   const hv = ApHv.split("-")[1];
 
-  db.select("*")
+  db.select("temperature", "humidity", "weight", "battery", "readings_date")
     .from("apiaries")
     .where({
       apiary: ap,
       hive: hv,
     })
-    .select("temperature", "humidity", "weight", "battery", "readings_date")
     .then((data) => {
       // console.log(data);
       res.json(data);
