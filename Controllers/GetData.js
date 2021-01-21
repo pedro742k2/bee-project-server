@@ -17,6 +17,7 @@ const handleGetData = (db) => (req, res) => {
     .then((data) => {
       data.forEach((value) => {
         console.log(value.readings_date);
+        console.log("2021-01-21 01:00:00.000Z");
         // value.readings_date === intDateCount ? lastDates.push()
       });
       res.json(data);
