@@ -59,7 +59,9 @@ app.post("/data-from-sensor", (req, res) => {
       battery,
       readings_date,
     })
-    .into("apiaries");
+    .into("apiaries")
+    .then(db.commit)
+    .catch(db.rollback);
 
   res.send("received");
 });
