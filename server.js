@@ -32,15 +32,12 @@ app.post("/get-data", (req, res) => {
       hive: hv,
     })
     .then((data) => {
-      // console.log(data);
+      throw error;
       res.json(data);
+    })
+    .catch(() => {
+      res.json(`Unable to get data from Apiary ${ap} - Hive ${hv}`);
     });
-
-  /* const filteredApiaries = receivedData.filter((item) => {
-    return ApHv === item.ApHv;
-  }); */
-
-  // res.json(filteredApiaries);
 });
 
 app.post("/data-from-sensor", (req, res) => {
