@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const knex = require("knex");
+const DataFromSensor = require("./Controllers/DataFromSensor");
 
 const db = knex({
   client: "pg",
@@ -17,8 +18,6 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
-
-let receivedData = [];
 
 app.post("/get-data", (req, res) => {
   const ApHv = req.body.ApHv[0];
@@ -40,62 +39,8 @@ app.post("/get-data", (req, res) => {
     });
 });
 
-app.post("/data-from-sensor", (req, res) => {
-  const { ApHv, readDate, data } = req.body;
-
-  const apiary = ApHv.split("-")[0];
-  const hive = ApHv.split("-")[1];
-
-  const readOn = readDate.split("-");
-  const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
-
-  db.select("readings_date")
-    .from("apiaries")
-    .where({
-      readings_date: readings_date,
-      apiary: apiary,
-      hive: hive,
-    })
-    .then((checkDate) => {
-      if (checkDate.length >= 1) {
-        res.json({
-          stored: false,
-          msg: "That database already have data for this date",
-        });
-      } else {
-        const temp = data.split("-")[0];
-        const hmdt = data.split("-")[1];
-        const weight = data.split("-")[2];
-        const battery = data.split("-")[3];
-
-        db("apiaries")
-          .insert({
-            apiary,
-            hive,
-            temperature: temp,
-            humidity: hmdt,
-            weight,
-            battery,
-            readings_date,
-          })
-          .into("apiaries")
-          .then(db.commit)
-          .catch(db.rollback);
-
-        res.json({
-          stored: true,
-          msg: "Successfully stored",
-        });
-      }
-    })
-    .catch(() => {
-      res.json({
-        stored: false,
-        msg: "Unable to consult the database",
-      });
-    });
-});
+app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
 app.listen(PORT, () => {
-  console.log("Server started on port", PORT);
+  console.log("Server listening on port", PORT);
 });
