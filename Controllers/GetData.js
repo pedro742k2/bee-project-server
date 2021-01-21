@@ -5,11 +5,10 @@ const handleGetData = (db) => (req, res) => {
   const { currentDate, measurementType } = req.body;
 
   const date = currentDate.split("-");
-  const day = Number(date[0]);
-  const month = Number(date[1]);
-  const year = Number(date[1]);
+  const day = date[0];
+  const month = date[1];
+  const year = date[2];
 
-  console.log(day, month, year);
   if (measurementType === "daily") {
     db.select("*")
       .from("apiaries")
