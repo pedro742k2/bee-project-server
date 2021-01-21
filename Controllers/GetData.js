@@ -13,7 +13,7 @@ const handleGetData = (db) => (req, res) => {
   let hour = 0;
 
   if (measurementType === "daily") {
-    db.select("*")
+    db.select("temperature", "humidity", "weight", "battery", "readings_date")
       .from("apiaries")
       .where({
         apiary: ap,
