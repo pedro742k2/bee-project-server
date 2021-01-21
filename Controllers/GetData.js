@@ -22,7 +22,7 @@ const handleGetData = (db) => (req, res) => {
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(String(value.readings_date)).getHours();
-          if (valueHour === hour && keepChecking) {
+          if (valueHour === hour) {
             firstDataFromHours.push(value);
             hour++;
           }
