@@ -22,12 +22,26 @@ let receivedData = [];
 
 app.post("/get-data", (req, res) => {
   const ApHv = req.body.ApHv[0];
+  const ap = ApHv.split("-")[0];
+  const hv = ApHv.split("-")[1];
 
-  const filteredApiaries = receivedData.filter((item) => {
+  db.select("*")
+    .from("apiaries")
+    .where({
+      apiary: ap,
+      hive: hv,
+    })
+    .select("temperature", "humidity", "weight", "battery", "readings_date")
+    .then((data) => {
+      // console.log(data);
+      res.json(data);
+    });
+
+  /* const filteredApiaries = receivedData.filter((item) => {
     return ApHv === item.ApHv;
-  });
+  }); */
 
-  res.json(filteredApiaries);
+  // res.json(filteredApiaries);
 });
 
 app.post("/data-from-sensor", (req, res) => {
@@ -42,12 +56,6 @@ app.post("/data-from-sensor", (req, res) => {
   const battery = data.split("-")[3];
   const readOn = readDate.split("-");
   const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
-
-  db.select("*")
-    .from("apiaries")
-    .then((data) => {
-      console.log(data);
-    });
 
   db("apiaries")
     .insert({
