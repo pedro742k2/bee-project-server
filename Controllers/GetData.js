@@ -16,13 +16,15 @@ const handleGetData = (db) => (req, res) => {
     .orderBy("readings_date")
     .then((data) => {
       data.forEach((value) => {
-        console.log(value.readings_date.split(" ")[1]);
+        console.log(value.readings_date.split("T")[1]);
         // value.readings_date === intDateCount ? lastDates.push()
       });
       res.json(data);
     })
-    .catch(() => {
-      res.json(`Unable to get data from Apiary ${ap} - Hive ${hv}`);
+    .catch((error) => {
+      res.json(
+        `Unable to get data from Apiary ${ap} - Hive ${hv}\nError: ${error}`
+      );
     });
 };
 
