@@ -13,12 +13,11 @@ const handleDataFromSensor = (db) => (req, res) => {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    console.log(day, month, year);
     db.select("*")
       .from("apiaries")
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
-      .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [year])
+      .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
       .then((data) => {
         console.log(data);
       });
