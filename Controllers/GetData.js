@@ -4,7 +4,8 @@ const handleGetData = (db) => (req, res) => {
   const ap = ApHv.split("-")[0];
   const hv = ApHv.split("-")[1];
 
-  let firstDateCount = 0;
+  let intDateCount = 0;
+  const lastDates = [];
 
   db.select("temperature", "humidity", "weight", "battery", "readings_date")
     .from("apiaries")
@@ -15,7 +16,8 @@ const handleGetData = (db) => (req, res) => {
     .orderBy("readings_date")
     .then((data) => {
       data.forEach((value) => {
-        console.log(value);
+        console.log(value.readings_date.split(" ")[1][2]);
+        // value.readings_date === intDateCount ? lastDates.push()
       });
       res.json(data);
     })
