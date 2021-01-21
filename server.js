@@ -46,10 +46,6 @@ app.post("/data-from-sensor", (req, res) => {
   const apiary = ApHv.split("-")[0];
   const hive = ApHv.split("-")[1];
 
-  const temp = data.split("-")[0];
-  const hmdt = data.split("-")[1];
-  const weight = data.split("-")[2];
-  const battery = data.split("-")[3];
   const readOn = readDate.split("-");
   const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
 
@@ -62,8 +58,16 @@ app.post("/data-from-sensor", (req, res) => {
     })
     .then((data) => {
       if (data.length >= 1) {
-        res.json("That database already have data for this date");
+        res.json({
+          stored: false,
+          msg: "That database already have data for this date",
+        });
       } else {
+        const temp = data.split("-")[0];
+        const hmdt = data.split("-")[1];
+        const weight = data.split("-")[2];
+        const battery = data.split("-")[3];
+
         db("apiaries")
           .insert({
             apiary,
@@ -78,11 +82,17 @@ app.post("/data-from-sensor", (req, res) => {
           .then(db.commit)
           .catch(db.rollback);
 
-        res.json("received");
+        res.json({
+          stored: true,
+          msg: "Successfully stored",
+        });
       }
     })
     .catch(() => {
-      res.json("Unable to consult");
+      res.json({
+        stored: false,
+        msg: "Unable to consult the database",
+      });
     });
 });
 
