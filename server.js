@@ -62,6 +62,9 @@ app.post("/data-from-sensor", (req, res) => {
     })
     .then((data) => {
       console.log(data);
+    })
+    .catch(() => {
+      console.log("There are no data for this date");
     });
 
   db("apiaries")
