@@ -31,6 +31,7 @@ app.post("/get-data", (req, res) => {
       apiary: ap,
       hive: hv,
     })
+    .orderBy("readings_date")
     .then((data) => {
       res.json(data);
     })
