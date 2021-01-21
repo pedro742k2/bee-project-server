@@ -9,36 +9,36 @@ const handleGetData = (db) => (req, res) => {
   const month = date[1];
   const year = date[2];
 
+  const firstDataFromHours = [];
+  let hour = 0;
+
   if (measurementType === "daily") {
     db.select("*")
       .from("apiaries")
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
       .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
+      .orderBy("readings_date")
       .then((data) => {
-        res.json(data);
+        data.forEach((value) => {
+          const valueHour = new Date(String(value.readings_date)).getHours();
+          if (valueHour === hour && keepChecking) {
+            firstDataFromHours.push(value);
+            hour++;
+          }
+        });
+        res.json(firstDataFromHours);
+      })
+      .catch((error) => {
+        res.json(
+          `Unable to get data from Apiary ${ap} - Hive ${hv}\nError: ${error}`
+        );
       });
   } else if (measurementType === "monthly") {
     res.json("Resource not available yet");
   } else {
     res.json("Resource not available yet");
   }
-
-  /* db.select("temperature", "humidity", "weight", "battery", "readings_date")
-    .from("apiaries")
-    .where({
-      apiary: ap,
-      hive: hv,
-    })
-    .orderBy("readings_date")
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      res.json(
-        `Unable to get data from Apiary ${ap} - Hive ${hv}\nError: ${error}`
-      );
-    }); */
 };
 
 module.exports = {
