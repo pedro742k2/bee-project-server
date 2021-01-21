@@ -15,6 +15,10 @@ const handleGetData = (db) => (req, res) => {
   if (measurementType === "daily") {
     db.select("*")
       .from("apiaries")
+      .where({
+        apiary: ap,
+        hive: hv,
+      })
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
       .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
