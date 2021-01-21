@@ -61,10 +61,14 @@ app.post("/data-from-sensor", (req, res) => {
       hive: hive,
     })
     .then((data) => {
-      console.log(data);
+      if (data) {
+        console.log("That database already have data for this date");
+      } else {
+        console.log("There are no data for this date");
+      }
     })
     .catch(() => {
-      console.log("There are no data for this date");
+      console.log("Unable to consult");
     });
 
   db("apiaries")
