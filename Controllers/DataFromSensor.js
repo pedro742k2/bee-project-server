@@ -14,7 +14,8 @@ const handleDataFromSensor = (db) => (req, res) => {
     const year = date.getFullYear();
 
     console.log(day, month, year);
-    db("apiaries")
+    db.select("*")
+      .from("apiaries")
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [year])
