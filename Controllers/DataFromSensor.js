@@ -18,7 +18,7 @@ const handleDataFromSensor = (db) => (req, res) => {
       if (checkDate.length >= 1) {
         res.json({
           stored: false,
-          msg: "That database already have data for this date",
+          msg: "Database already have data for this date",
         });
       } else {
         const temp = data.split("-")[0];
@@ -42,7 +42,7 @@ const handleDataFromSensor = (db) => (req, res) => {
 
         res.json({
           stored: true,
-          msg: "Successfully stored",
+          msg: "Successfully stored on the database",
         });
       }
     })
