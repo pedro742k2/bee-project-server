@@ -52,11 +52,14 @@ app.post("/data-from-sensor", (req, res) => {
   const battery = data.split("-")[3];
   const readOn = readDate.split("-");
   const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
-  const cloneReadingsDate = readings_date;
 
   db.select("readings_date")
     .from("apiaries")
-    .where(readings_date, cloneReadingsDate)
+    .where({
+      readings_date: readings_date,
+      apiary: apiary,
+      hive: hive,
+    })
     .then((data) => {
       console.log(data);
     });
