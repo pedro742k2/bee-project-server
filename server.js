@@ -32,7 +32,6 @@ app.post("/get-data", (req, res) => {
       hive: hv,
     })
     .then((data) => {
-      throw error;
       res.json(data);
     })
     .catch(() => {
