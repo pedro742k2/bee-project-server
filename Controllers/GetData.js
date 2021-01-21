@@ -16,7 +16,7 @@ const handleGetData = (db) => (req, res) => {
     .orderBy("readings_date")
     .then((data) => {
       data.forEach((value) => {
-        console.log(value.readings_date.split("T"));
+        console.log(String(value.readings_date.split(" ")));
         // value.readings_date === intDateCount ? lastDates.push()
       });
       res.json(data);
