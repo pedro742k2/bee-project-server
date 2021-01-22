@@ -20,6 +20,10 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
+app.delete("/delete-data", (req, res) => {
+  db("apiaries").truncate();
+});
+
 app.post("/get-data", GetData.handleGetData(db));
 
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
