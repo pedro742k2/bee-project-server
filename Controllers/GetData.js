@@ -9,8 +9,6 @@ const handleGetData = (db) => (req, res) => {
   const month = date[1];
   const year = date[2];
 
-  console.log(day, month, year);
-
   const firstDataFromHours = [];
   let hour = 0;
 
@@ -26,7 +24,6 @@ const handleGetData = (db) => (req, res) => {
       .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
       .orderBy("readings_date")
       .then((data) => {
-        console.log(data);
         data.forEach((value) => {
           const valueHour = new Date(String(value.readings_date)).getHours();
           if (valueHour === hour) {
@@ -34,6 +31,17 @@ const handleGetData = (db) => (req, res) => {
             hour++;
           }
         });
+
+        db.select("*")
+          .from("apiaries")
+          .where({
+            apiary: ap,
+            hive: hv,
+          })
+          .then((lastValues) => {
+            console.log(lastValues[lastValues.length - 1]);
+          });
+
         res.json(firstDataFromHours);
       })
       .catch((error) => {
