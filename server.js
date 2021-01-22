@@ -22,6 +22,8 @@ app.use(cors());
 
 app.delete("/delete-data", (req, res) => {
   db("apiaries").truncate();
+
+  res.json("Deleted");
 });
 
 app.post("/get-data", GetData.handleGetData(db));
