@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 
 app.delete("/delete-data", (req, res) => {
-  db("apiaries").truncate();
+  db("apiaries").truncate().then(db.commit);
 
   res.json("Deleted");
 });
