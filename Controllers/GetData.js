@@ -32,14 +32,13 @@ const handleGetData = (db) => (req, res) => {
           }
         });
 
-        const lastValues = db
-          .select(
-            "temperature",
-            "humidity",
-            "weight",
-            "battery",
-            "readings_date"
-          )
+        db.select(
+          "temperature",
+          "humidity",
+          "weight",
+          "battery",
+          "readings_date"
+        )
           .from("apiaries")
           .where({
             apiary: ap,
@@ -47,13 +46,17 @@ const handleGetData = (db) => (req, res) => {
           })
           .orderBy("readings_date")
           .then((lastValues) => {
-            return lastValues[lastValues.length - 1];
+            const target = lastValues[lastValues.length - 1];
+            res.json({
+              firstDataFromHours,
+              lastValues: target,
+            });
           });
 
-        res.json({
-          firstDataFromHours: firstDataFromHours,
-          lastValues: lastValues,
-        });
+        // res.json({
+        //   firstDataFromHours,
+        //   lastValues,
+        // });
       })
       .catch((error) => {
         res.json(
