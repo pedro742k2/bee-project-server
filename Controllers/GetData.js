@@ -4,6 +4,8 @@ const handleGetData = (db) => (req, res) => {
   const hv = ApHv.split("-")[1];
   const { currentDate, measurementType } = req.body;
 
+  console.log(ApHv, currentDate, measurementType);
+
   const date = currentDate.split("-");
   const day = date[0];
   const month = date[1];
