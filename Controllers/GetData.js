@@ -51,8 +51,8 @@ const handleGetData = (db) => (req, res) => {
           });
 
         res.json({
-          firstDataFromHours,
-          lastValues,
+          firstDataFromHours: firstDataFromHours,
+          lastValues: lastValues,
         });
       })
       .catch((error) => {
