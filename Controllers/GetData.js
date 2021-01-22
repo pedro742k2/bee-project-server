@@ -32,12 +32,19 @@ const handleGetData = (db) => (req, res) => {
           }
         });
 
-        db.select("*")
+        db.select(
+          "temperature",
+          "humidity",
+          "weight",
+          "battery",
+          "readings_date"
+        )
           .from("apiaries")
           .where({
             apiary: ap,
             hive: hv,
           })
+          .orderBy("readings_date")
           .then((lastValues) => {
             console.log(lastValues[lastValues.length - 1]);
           });
