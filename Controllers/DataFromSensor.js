@@ -5,7 +5,7 @@ const handleDataFromSensor = (db) => (req, res) => {
   const hive = ApHv.split("-")[1];
 
   const readOn = readDate.split("-");
-  const readings_date = `${readOn[2]}/${readOn[1]}/${readOn[0]} ${readOn[3]}:${readOn[4]}`;
+  const readings_date = `${readOn[0]}/${readOn[1]}/${readOn[2]} ${readOn[3]}:${readOn[4]}`;
 
   db.select("readings_date")
     .from("apiaries")
