@@ -25,18 +25,25 @@ const handleGetData = (db) => (req, res) => {
       .orderBy("readings_date")
       .then((data) => {
         data.forEach((value) => {
-          const valueHour = new Date(String(value.readings_date)).getHours();
+          const valueHour = new Date(value.readings_date).getHours();
           // console.log(valueHour);
           if (valueHour === hour) {
             firstDataFromHours.push(value);
             // hour++;
           } else {
+            const validDate = new Date(value.readings_date);
+            const faultyHour = new Date(
+              `${validDate.getFullYear()}-${
+                validDate.getMonth() + 1
+              }-${validDate.getDate()} ${hour}:${validDate.getMinutes()}`
+            );
+
             firstDataFromHours.push({
               temperature: "0",
               humidity: "0",
               weight: "0",
               battery: "0",
-              readings_date: value.readings_date,
+              readings_date: faultyHour,
             });
           }
           hour++;
