@@ -45,6 +45,8 @@ const handleGetData = (db) => (req, res) => {
                   }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
                 );
 
+                console.log(i);
+
                 firstDataFromHours.push({
                   temperature: "0",
                   humidity: "0",
