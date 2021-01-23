@@ -26,11 +26,20 @@ const handleGetData = (db) => (req, res) => {
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(String(value.readings_date)).getHours();
-          console.log(valueHour);
+          // console.log(valueHour);
           if (valueHour === hour) {
             firstDataFromHours.push(value);
-            hour++;
+            // hour++;
+          } else {
+            firstDataFromHours.push({
+              temperature: "0",
+              humidity: "0",
+              weight: "0",
+              battery: "0",
+              readings_date: value.readings_date,
+            });
           }
+          hour++;
         });
 
         db.select(
