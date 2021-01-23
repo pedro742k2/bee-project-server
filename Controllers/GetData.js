@@ -26,6 +26,7 @@ const handleGetData = (db) => (req, res) => {
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(String(value.readings_date)).getHours();
+          console.log(valueHour);
           if (valueHour === hour) {
             firstDataFromHours.push(value);
             hour++;
@@ -52,12 +53,10 @@ const handleGetData = (db) => (req, res) => {
               firstDataFromHours,
               lastValues: target,
             });
+          })
+          .catch((error) => {
+            res.json("Unable to get any data:", error);
           });
-
-        // res.json({
-        //   firstDataFromHours,
-        //   lastValues,
-        // });
       })
       .catch((error) => {
         res.json(
