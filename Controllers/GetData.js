@@ -43,17 +43,17 @@ const handleGetData = (db) => (req, res) => {
                     validDate.getMonth() + 1
                   }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
                 );
+
+                firstDataFromHours.push({
+                  temperature: "0",
+                  humidity: "0",
+                  weight: "0",
+                  battery: "0",
+                  readings_date: faultyHour,
+                });
               }
 
               hour = valueHour;
-
-              firstDataFromHours.push({
-                temperature: "0",
-                humidity: "0",
-                weight: "0",
-                battery: "0",
-                readings_date: faultyHour,
-              });
             }
           }
         });
