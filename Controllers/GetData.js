@@ -53,6 +53,7 @@ const handleGetData = (db) => (req, res) => {
 
               console.log("before", valueHour, hour);
               hour = valueHour;
+              firstDataFromHours.push(value);
               console.log("after", valueHour, hour);
             }
           }
