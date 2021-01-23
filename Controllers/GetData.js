@@ -39,28 +39,6 @@ const handleGetData = (db) => (req, res) => {
                   }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
                 );
 
-                const errorForDb = `No data was received at ${
-                  faultyHour.getHours() <= 9
-                    ? "0" + faultyHour.getHours()
-                    : faultyHour.getHours()
-                } hours on ${faultyHour.getDate()}-${
-                  faultyHour.getMonth() + 1
-                }-${faultyHour.getFullYear()}`;
-
-                db("errors")
-                  .whereNot({
-                    error: errorForDb,
-                  })
-                  .insert({
-                    apiary: ap,
-                    hive: hv,
-                    error: errorForDb,
-                    date_of_error: faultyHour,
-                  })
-                  .into("errors")
-                  .then(db.commit)
-                  .catch(db.rollback);
-
                 firstDataFromHours.push({
                   temperature: "0",
                   humidity: "0",
