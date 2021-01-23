@@ -25,28 +25,37 @@ const handleGetData = (db) => (req, res) => {
       .orderBy("readings_date")
       .then((data) => {
         data.forEach((value) => {
+          let updateHour = true;
+
           const valueHour = new Date(value.readings_date).getHours();
-          console.log(hour, valueHour, hour === valueHour);
+          // console.log(hour, valueHour, hour === valueHour);
           if (valueHour === hour) {
             firstDataFromHours.push(value);
-            // hour++;
+            hour++;
+            updateHour = false;
           } else {
-            const validDate = new Date(value.readings_date);
-            const faultyHour = new Date(
-              `${validDate.getFullYear()}-${
-                validDate.getMonth() + 1
-              }-${validDate.getDate()} ${hour}:${validDate.getMinutes()}`
-            );
+            if (valueHour > hour) {
+              const faultyValues = valueHour - hour;
+              for (let i = hour; i < faultyHour; i++) {
+                const validDate = new Date(value.readings_date);
+                const faultyHour = new Date(
+                  `${validDate.getFullYear()}-${
+                    validDate.getMonth() + 1
+                  }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
+                );
+              }
 
-            firstDataFromHours.push({
-              temperature: "0",
-              humidity: "0",
-              weight: "0",
-              battery: "0",
-              readings_date: faultyHour,
-            });
+              hour = valueHour;
+
+              firstDataFromHours.push({
+                temperature: "0",
+                humidity: "0",
+                weight: "0",
+                battery: "0",
+                readings_date: faultyHour,
+              });
+            }
           }
-          hour++;
         });
 
         db.select(
