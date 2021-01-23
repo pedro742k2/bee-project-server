@@ -46,7 +46,7 @@ const handleGetData = (db) => (req, res) => {
           })
           .orderBy("readings_date")
           .then((lastValues) => {
-            const target = lastValues[lastValues.length - 1];
+            // const target = lastValues[lastValues.length - 1];
             res.json({
               firstDataFromHours,
               lastValues: target,
