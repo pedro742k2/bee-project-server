@@ -36,7 +36,6 @@ const handleDataFromSensor = (db) => (req, res) => {
             battery,
             readings_date,
           })
-          .into("apiaries")
           .then(db.commit)
           .catch(db.rollback);
 

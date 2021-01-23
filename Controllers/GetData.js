@@ -30,7 +30,6 @@ const handleGetData = (db) => (req, res) => {
             firstDataFromHours.push(value);
             hour++;
           } else {
-            console.log(valueHour, hour, valueHour > hour);
             if (valueHour > hour) {
               for (let i = hour; i < valueHour; i++) {
                 const validDate = new Date(value.readings_date);
@@ -40,7 +39,22 @@ const handleGetData = (db) => (req, res) => {
                   }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
                 );
 
-                console.log(i);
+                const errorForDb = `No data was received at ${faultyHour.getHours()} on ${faultyHour.getDate()}-${
+                  faultyHour.getMonth() + 1
+                }-${faultyHour.getFullYear()}`;
+
+                db("errors")
+                  .whereNot({
+                    error: errorForDb,
+                  })
+                  .insert({
+                    apiary: ap,
+                    hive: hv,
+                    error: errorForDb,
+                    date_of_error: faultyHour,
+                  })
+                  .then(db.commit)
+                  .catch(db.rollback);
 
                 firstDataFromHours.push({
                   temperature: "0",
@@ -51,10 +65,8 @@ const handleGetData = (db) => (req, res) => {
                 });
               }
 
-              console.log("before", valueHour, hour);
-              hour = valueHour + 1; // 8
+              hour = valueHour + 1;
               firstDataFromHours.push(value);
-              console.log("after", valueHour, hour);
             }
           }
         });
