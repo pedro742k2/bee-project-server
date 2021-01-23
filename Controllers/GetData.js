@@ -52,7 +52,7 @@ const handleGetData = (db) => (req, res) => {
               }
 
               console.log("before", valueHour, hour);
-              hour = valueHour;
+              hour = valueHour + 1; // 8
               firstDataFromHours.push(value);
               console.log("after", valueHour, hour);
             }
