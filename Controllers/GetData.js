@@ -36,8 +36,10 @@ const handleGetData = (db) => (req, res) => {
           } else {
             console.log(valueHour, hour, valueHour > hour);
             if (valueHour > hour) {
+              console.log("if");
               const faultyValues = valueHour - hour;
               for (let i = hour; i < faultyValues; i++) {
+                console.log("for");
                 const validDate = new Date(value.readings_date);
                 const faultyHour = new Date(
                   `${validDate.getFullYear()}-${
