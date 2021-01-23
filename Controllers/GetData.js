@@ -5,9 +5,9 @@ const handleGetData = (db) => (req, res) => {
   const { currentDate, measurementType } = req.body;
 
   const date = currentDate.split("-");
-  const day = date[0];
+  const day = date[2];
   const month = date[1];
-  const year = date[2];
+  const year = date[0];
 
   const firstDataFromHours = [];
   let hour = 0;
