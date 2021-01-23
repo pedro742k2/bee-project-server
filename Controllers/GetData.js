@@ -90,9 +90,9 @@ const handleGetData = (db) => (req, res) => {
         );
       });
   } else if (measurementType === "weekly") {
-    res.json("Resource not available yet");
+    res.json("not available");
   } else if (measurementType === "monthly") {
-    res.json("Resource not available yet");
+    res.json("not available");
   } else {
     res.json("Invalid resource");
   }
