@@ -34,7 +34,7 @@ const handleGetData = (db) => (req, res) => {
             hour++;
             updateHour = false;
           } else {
-            console(valueHour, hour, valueHour > hour);
+            console.log(valueHour, hour, valueHour > hour);
             if (valueHour > hour) {
               const faultyValues = valueHour - hour;
               for (let i = hour; i < faultyValues; i++) {
