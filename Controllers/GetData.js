@@ -25,14 +25,10 @@ const handleGetData = (db) => (req, res) => {
       .orderBy("readings_date")
       .then((data) => {
         data.forEach((value) => {
-          let updateHour = true;
-
           const valueHour = new Date(value.readings_date).getHours();
-          // console.log(hour, valueHour, hour === valueHour);
           if (valueHour === hour) {
             firstDataFromHours.push(value);
             hour++;
-            updateHour = false;
           } else {
             console.log(valueHour, hour, valueHour > hour);
             if (valueHour > hour) {
@@ -55,7 +51,9 @@ const handleGetData = (db) => (req, res) => {
                 });
               }
 
+              console.log("before", valueHour, hour);
               hour = valueHour;
+              console.log("after", valueHour, hour);
             }
           }
         });
