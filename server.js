@@ -45,8 +45,8 @@ app.post("/register", (req, res) => {
       res.json("User has beed registred");
       db.commit;
     })
-    .catch(() => {
-      res.json("Something went wrong");
+    .catch((error) => {
+      res.json("Something went wrong:", error);
       db.rollback;
     });
 });
