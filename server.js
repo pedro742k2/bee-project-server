@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const DataFromSensor = require("./Controllers/DataFromSensor");
 const GetData = require("./Controllers/GetData");
 const Register = require("./Controllers/Register");
+const Login = require("./Controllers/Login");
 
 const db = knex({
   client: "pg",
@@ -24,11 +25,11 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.delete("/delete-data", (req, res) => {
+/* app.delete("/delete-data", (req, res) => {
   db("apiaries").truncate().then(db.commit);
 
   res.json("Deleted");
-});
+}); */
 
 app.post("/get-data", GetData.handleGetData(db));
 
@@ -36,35 +37,7 @@ app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
 app.post("/register", Register.handleRegister(db, bcrypt));
 
-app.post("/login", (req, res) => {
-  const { user, password } = req.body;
-
-  db.select("user_name", "email", "password", "ap_hv", "name")
-    .from("users")
-    .where("user_name", user)
-    .orWhere("email", user)
-    .then((user) => {
-      if (user) {
-        bcrypt.compare(password, user[0].password).then((result) => {
-          if (result) {
-            res.json({
-              userName: user[0].user_name,
-              email: user[0].email,
-              ApHv: user[0].ap_hv,
-              name: user[0].name,
-            });
-          } else {
-            res.json("Wrong credentials 1");
-          }
-        });
-      } else {
-        res.json("Wrong credentials 2");
-      }
-    })
-    .catch(() => {
-      res.json("Wrong credentials 3");
-    });
-});
+app.post("/login", Login.handleLogin(db, bcrypt));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
