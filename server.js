@@ -45,6 +45,7 @@ app.post("/login", (req, res) => {
     .orWhere("email", user)
     .then((user) => {
       if (user) {
+        console.log(user.password);
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
             res.json({
