@@ -7,16 +7,15 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       email,
       password: hash,
     })
+      .returning(["user_name", "email"])
       .into("users")
-      .returning("user_name", "email")
-      .then((user_name, user_email) => {
-        const data = [user_name, user_email];
+      .then((data) => {
         res.json(data);
-        db.commit;
+        // db.commit;
       })
       .catch(() => {
         res.json("Something went wrong");
-        db.rollback;
+        // db.rollback;
       });
   });
 };
