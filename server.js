@@ -34,27 +34,7 @@ app.post("/get-data", GetData.handleGetData(db));
 
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
-// app.post("/register", Register.handleRegister(db));
-app.post("/register", (req, res) => {
-  const { userName, email, password } = req.body;
-
-  bcrypt.hash(password, 10, (error, hash) => {
-    db.insert({
-      user_name: userName,
-      email,
-      password: hash,
-    })
-      .into("users")
-      .then(() => {
-        res.json("User has beed registred");
-        db.commit;
-      })
-      .catch((error) => {
-        res.json("Something went wrong:", error);
-        db.rollback;
-      });
-  });
-});
+app.post("/register", Register.handleRegister(db, bcrypt));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
