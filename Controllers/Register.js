@@ -11,11 +11,9 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       .into("users")
       .then((data) => {
         res.json(data);
-        // db.commit;
       })
       .catch(() => {
         res.json("Something went wrong");
-        // db.rollback;
       });
   });
 };
