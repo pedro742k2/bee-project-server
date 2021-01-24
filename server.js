@@ -44,11 +44,22 @@ app.post("/login", (req, res) => {
     .where("user_name", user)
     .orWhere("email", user)
     .then((user) => {
-      // bcrypt.compare()
-      res.json(user);
+      bcrypt.compare(password, user.password).then((result) => {
+        if (result) {
+          res.json({
+            userName: user.user_name,
+            email: user.email,
+            ApHv: user.ap_hv,
+            name: user.name,
+          });
+        } else {
+          res.json("Wrong credentials");
+        }
+      });
+      // res.json(user);
     })
-    .catch((error) => {
-      res.json("Wrong credentials", error);
+    .catch(() => {
+      res.json("Wrong credentials");
     });
 });
 
