@@ -46,8 +46,8 @@ app.post("/login", (req, res) => {
       // bcrypt.compare()
       res.json(user);
     })
-    .catch(() => {
-      res.json("Wrong credentials");
+    .catch((error) => {
+      res.json("Wrong credentials", error);
     });
 });
 
