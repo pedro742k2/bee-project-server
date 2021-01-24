@@ -43,6 +43,8 @@ app.post("/register", (req, res) => {
     .into("users")
     .then(db.commit)
     .catch(db.rollback);
+
+  res.json("User has beed registred");
 });
 
 app.listen(PORT, () => {
