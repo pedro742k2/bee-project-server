@@ -10,8 +10,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       .into("users")
       .returning("user_name", "email")
       .then((userName, userEmail) => {
-        const data = [];
-        data.push(userName, userEmail);
+        const data = [userName, userEmail];
         res.json(data);
         db.commit;
       })
