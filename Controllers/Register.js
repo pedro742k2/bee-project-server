@@ -8,8 +8,9 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       password: hash,
     })
       .into("users")
-      .then(() => {
-        res.json("User has beed registred");
+      .returning("user_name", "email")
+      .then((data) => {
+        res.json(data);
         db.commit;
       })
       .catch(() => {
