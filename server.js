@@ -40,6 +40,7 @@ app.post("/login", (req, res) => {
   const { user, password } = req.body;
 
   db.select("user_name", "email", "password", "ap_hv", "name")
+    .from("users")
     .where("user_name", user)
     .orWhere("email", user)
     .then((user) => {
