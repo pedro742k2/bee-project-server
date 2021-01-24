@@ -41,10 +41,14 @@ app.post("/register", (req, res) => {
     password,
   })
     .into("users")
-    .then(db.commit)
-    .catch(db.rollback);
-
-  res.json("User has beed registred");
+    .then(() => {
+      res.json("User has beed registred");
+      db.commit;
+    })
+    .catch(() => {
+      res.json("Something went wrong");
+      db.rollback;
+    });
 });
 
 app.listen(PORT, () => {
