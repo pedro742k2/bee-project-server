@@ -47,14 +47,12 @@ app.post("/login", (req, res) => {
       if (user) {
         bcrypt.compare(password, user[0].password).then((result) => {
           if (result) {
-            res.json(
-              JSON.stringify({
-                userName: user.user_name,
-                email: user.email,
-                ApHv: user.ap_hv,
-                name: user.name,
-              })
-            );
+            res.json({
+              userName: user[0].user_name,
+              email: user[0].email,
+              ApHv: user[0].ap_hv,
+              name: user[0].name,
+            });
           } else {
             res.json("Wrong credentials 1");
           }
