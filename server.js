@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const knex = require("knex");
+const bcrypt = require("bcrypt");
+
+/* Controllers */
 const DataFromSensor = require("./Controllers/DataFromSensor");
 const GetData = require("./Controllers/GetData");
 const Register = require("./Controllers/Register");
@@ -35,20 +38,22 @@ app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 app.post("/register", (req, res) => {
   const { userName, email, password } = req.body;
 
-  db.insert({
-    user_name: userName,
-    email,
-    password,
-  })
-    .into("users")
-    .then(() => {
-      res.json("User has beed registred");
-      db.commit;
+  bcrypt.hash(password, 10, (error, hash) => {
+    db.insert({
+      user_name: userName,
+      email,
+      password: hash,
     })
-    .catch((error) => {
-      res.json("Something went wrong:", error);
-      db.rollback;
-    });
+      .into("users")
+      .then(() => {
+        res.json("User has beed registred");
+        db.commit;
+      })
+      .catch((error) => {
+        res.json("Something went wrong:", error);
+        db.rollback;
+      });
+  });
 });
 
 app.listen(PORT, () => {
