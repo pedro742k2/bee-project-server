@@ -36,6 +36,21 @@ app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
 app.post("/register", Register.handleRegister(db, bcrypt));
 
+app.post("/login", (req, res) => {
+  const { user, password } = req.body;
+
+  db.select("user_name", "email", "password", "ap_hv", "name")
+    .where("user_name", user)
+    .orWhere("email", user)
+    .then((user) => {
+      // bcrypt.compare()
+      res.json(user);
+    })
+    .catch(() => {
+      res.json("Wrong credentials");
+    });
+});
+
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
 });
