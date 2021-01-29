@@ -37,7 +37,7 @@ app.put("/set-name", (req, res) => {
   const { userName, email, name } = req.body;
 
   db("users")
-    .where({ user_name: name, email: email })
+    .where({ user_name: userName, email: email })
     .update("name", name)
     .then((data) => {
       res.json("Updated successfuly:", data);
