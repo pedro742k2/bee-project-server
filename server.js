@@ -39,11 +39,11 @@ app.put("/set-name", (req, res) => {
   db("users")
     .where({ user_name: userName, email: email })
     .update("name", name)
-    .then((data) => {
-      res.json("Updated successfuly:", data);
+    .then(() => {
+      res.json("Updated successfuly");
     })
-    .catch((error) => {
-      res.status(400).json("Error:", error);
+    .catch(() => {
+      res.status(400).json("Error");
     });
 });
 
