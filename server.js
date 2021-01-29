@@ -8,6 +8,7 @@ const DataFromSensor = require("./Controllers/DataFromSensor");
 const GetData = require("./Controllers/GetData");
 const Register = require("./Controllers/Register");
 const Login = require("./Controllers/Login");
+const SetName = require("./Controllers/SetName");
 
 const db = knex({
   client: "pg",
@@ -33,19 +34,7 @@ app.post("/register", Register.handleRegister(db, bcrypt));
 
 app.post("/login", Login.handleLogin(db, bcrypt));
 
-app.put("/set-name", (req, res) => {
-  const { userName, email, name } = req.body;
-
-  db("users")
-    .where({ user_name: userName, email: email })
-    .update("name", name)
-    .then(() => {
-      res.json("Updated successfuly");
-    })
-    .catch(() => {
-      res.status(400).json("Error");
-    });
-});
+app.put("/set-name", SetName.handleSetName(db));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
