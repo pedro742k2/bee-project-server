@@ -36,7 +36,15 @@ app.post("/login", Login.handleLogin(db, bcrypt));
 app.put("/set-name", (req, res) => {
   const { userName, email, name } = req.body;
 
-  db("users").where({ user_name: name, email: email }).update("name", name);
+  db("users")
+    .where({ user_name: name, email: email })
+    .update("name", name)
+    .then((data) => {
+      res.json("Updated successfuly:", data);
+    })
+    .catch((error) => {
+      res.status(400).json("Error:", error);
+    });
 });
 
 app.listen(PORT, () => {
