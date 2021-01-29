@@ -25,12 +25,6 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-/* app.delete("/delete-data", (req, res) => {
-  db("apiaries").truncate().then(db.commit);
-
-  res.json("Deleted");
-}); */
-
 app.post("/get-data", GetData.handleGetData(db));
 
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
@@ -38,6 +32,12 @@ app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 app.post("/register", Register.handleRegister(db, bcrypt));
 
 app.post("/login", Login.handleLogin(db, bcrypt));
+
+app.put("/set-name", (req, res) => {
+  const { userName, email, name } = req.body;
+
+  db("users").where({ user_name: name, email: email }).update("name", name);
+});
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
