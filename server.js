@@ -36,7 +36,7 @@ app.post("/login", Login.handleLogin(db, bcrypt));
 
 app.put("/set-name", SetName.handleSetName(db));
 
-app.post("/add-hives", (req, res) => {
+app.put("/add-hives", (req, res) => {
   const { userName, email, ApHv } = req.body;
   let valid = true;
 
