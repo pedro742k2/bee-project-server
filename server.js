@@ -53,8 +53,10 @@ app.put("/add-hives", (req, res) => {
         data = data[0].ap_hv;
         console.log(data);
         if (data.includes(ApHv)) {
+          console.log("1");
           valid = false;
         } else {
+          console.log("2");
           data.split(";").forEach((item) => {
             const newItem = item.split("-");
             if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
@@ -65,7 +67,7 @@ app.put("/add-hives", (req, res) => {
 
         if (valid) {
           const newApHvString = data + ApHv + ";";
-
+          console.log("3");
           db("users")
             .where({
               user_name: userName,
@@ -73,18 +75,22 @@ app.put("/add-hives", (req, res) => {
             })
             .update("ap_hv", newApHvString)
             .then((newApHvData) => {
+              console.log("4");
               res.json("Successfuly updated:", newApHvData);
             })
             .catch(() => {
+              console.log("5");
               res.status(400).json("Something went wrong");
             });
         }
       });
   } else {
+    console.log("6");
     valid = false;
   }
 
   if (!valid) {
+    console.log("7");
     res.status(400).json("Invalid input");
   }
 });
