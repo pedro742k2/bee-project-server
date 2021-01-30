@@ -27,6 +27,19 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
+app.post("/get-user-data", (req, res) => {
+  const { userName, email } = req.body;
+
+  db.select("name", "ap_hv")
+    .where({ user_name: userName, email: email })
+    .then((ApHv) => {
+      res.json(ApHv);
+    })
+    .catch(() => {
+      res.status(400).json("Unable to consult the database");
+    });
+});
+
 app.post("/get-data", GetData.handleGetData(db));
 
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
