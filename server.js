@@ -91,8 +91,9 @@ app.put("/add-hives", (req, res) => {
     valid = false;
   }
 
+  console.log("7,", valid);
   if (!valid) {
-    console.log("7");
+    console.log("8");
     res.status(400).json("Invalid input");
   }
 });
