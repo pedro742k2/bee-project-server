@@ -43,7 +43,7 @@ app.put("/add-hives", async (req, res) => {
   const sentApHv = ApHv.split("-");
 
   if (sentApHv.length === 2) {
-    valid = await db("users")
+    db("users")
       .where({
         user_name: userName,
         email: email,
@@ -53,17 +53,8 @@ app.put("/add-hives", async (req, res) => {
         data = data[0].ap_hv;
         console.log(data);
         if (data.includes(ApHv)) {
-          res.status(400).json("Invalid input 1");
+          res.status(400).json("Invalid input");
           return false;
-        } else {
-          data.split(";").forEach((item) => {
-            console.log(item);
-            const newItem = item.split("-");
-            if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
-              res.status(400).json("Invalid input 2");
-              return false;
-            }
-          });
         }
 
         if (valid) {
@@ -84,12 +75,12 @@ app.put("/add-hives", async (req, res) => {
               return false;
             });
         } else {
-          res.status(400).json("Invalid input 3");
+          res.status(400).json("Invalid input");
           return false;
         }
       });
   } else {
-    res.status(400).json("Invalid input 4");
+    res.status(400).json("Invalid input");
   }
 });
 
