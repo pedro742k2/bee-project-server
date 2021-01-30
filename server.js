@@ -53,6 +53,7 @@ app.put("/add-hives", async (req, res) => {
         data = data[0].ap_hv;
         console.log(data);
         if (data.includes(ApHv)) {
+          res.status(400).json("Invalid input");
           return false;
         } else {
           data.split(";").forEach((item) => {
@@ -77,7 +78,8 @@ app.put("/add-hives", async (req, res) => {
             .then((newApHvData) => {
               res.json("Successfuly updated:", newApHvData);
             })
-            .catch(() => {
+            .catch((error) => {
+              console.log(error);
               res.status(400).json("Something went wrong");
               return false;
             });
