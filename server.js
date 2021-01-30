@@ -36,14 +36,14 @@ app.post("/login", Login.handleLogin(db, bcrypt));
 
 app.put("/set-name", SetName.handleSetName(db));
 
-app.put("/add-hives", (req, res) => {
+app.put("/add-hives", async (req, res) => {
   const { userName, email, ApHv } = req.body;
   let valid = true;
 
   const sentApHv = ApHv.split("-");
 
   if (sentApHv.length === 2) {
-    valid = db("users")
+    valid = await db("users")
       .where({
         user_name: userName,
         email: email,
@@ -59,6 +59,7 @@ app.put("/add-hives", (req, res) => {
             console.log(item);
             const newItem = item.split("-");
             if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
+              res.status(400).json("Invalid input");
               return false;
             }
           });
