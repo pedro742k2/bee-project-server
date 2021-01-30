@@ -36,6 +36,57 @@ app.post("/login", Login.handleLogin(db, bcrypt));
 
 app.put("/set-name", SetName.handleSetName(db));
 
+app.post("/add-hives", (req, res) => {
+  const { userName, email, ApHv } = req.body;
+  let valid = true;
+
+  const sentApHv = ApHv.split("-");
+
+  if (sentApHv.length === 2) {
+    db("users")
+      .where({
+        user_name: userName,
+        email: email,
+      })
+      .select("ap_hv")
+      .then((data) => {
+        if (data.includes(ApHv)) {
+          valid = false;
+        } else {
+          data.split(";").forEach((item) => {
+            const newItem = item.split("-");
+            if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
+              valid = false;
+            }
+          });
+        }
+
+        if (valid) {
+          const newApHvString = data + ApHv + ";";
+
+          db("users")
+            .where({
+              user_name: userName,
+              email: email,
+            })
+            .update("ap_hv", newApHvString)
+            .then((newApHvData) => {
+              res.json("Successfuly updated:", newApHvData);
+            })
+            .catch(() => {
+              res.status(400).json("Something went wrong");
+            });
+        }
+      });
+  } else {
+    valid = false;
+  }
+
+  if (!valid) {
+    res.status(400).json("Invalid input");
+  }
+});
+
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
 });
