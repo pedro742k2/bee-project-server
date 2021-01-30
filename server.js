@@ -30,7 +30,8 @@ app.use(cors());
 app.post("/get-user-data", (req, res) => {
   const { userName, email } = req.body;
 
-  db.select("name", "ap_hv")
+  db("users")
+    .select("name", "ap_hv")
     .where({ user_name: userName, email: email })
     .then((ApHv) => {
       res.json(ApHv);
