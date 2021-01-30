@@ -43,7 +43,7 @@ app.put("/add-hives", (req, res) => {
   const sentApHv = ApHv.split("-");
 
   if (sentApHv.length === 2) {
-    db("users")
+    valid = db("users")
       .where({
         user_name: userName,
         email: email,
@@ -54,13 +54,13 @@ app.put("/add-hives", (req, res) => {
         console.log(data);
         if (data.includes(ApHv)) {
           console.log("1");
-          valid = false;
+          return false;
         } else {
           console.log("2");
           data.split(";").forEach((item) => {
             const newItem = item.split("-");
             if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
-              valid = false;
+              return false;
             }
           });
         }
@@ -82,6 +82,8 @@ app.put("/add-hives", (req, res) => {
               console.log("5");
               res.status(400).json("Something went wrong");
             });
+        } else {
+          return false;
         }
       });
   } else {
