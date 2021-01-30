@@ -53,14 +53,14 @@ app.put("/add-hives", async (req, res) => {
         data = data[0].ap_hv;
         console.log(data);
         if (data.includes(ApHv)) {
-          res.status(400).json("Invalid input");
+          res.status(400).json("Invalid input 1");
           return false;
         } else {
           data.split(";").forEach((item) => {
             console.log(item);
             const newItem = item.split("-");
             if (sentApHv[0] === newItem[0] && sentApHv[1] === newItem[1]) {
-              res.status(400).json("Invalid input");
+              res.status(400).json("Invalid input 2");
               return false;
             }
           });
@@ -84,12 +84,12 @@ app.put("/add-hives", async (req, res) => {
               return false;
             });
         } else {
-          res.status(400).json("Invalid input");
+          res.status(400).json("Invalid input 3");
           return false;
         }
       });
   } else {
-    res.status(400).json("Invalid input");
+    res.status(400).json("Invalid input 4");
   }
 });
 
