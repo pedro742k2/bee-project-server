@@ -9,6 +9,7 @@ const GetData = require("./Controllers/GetData");
 const Register = require("./Controllers/Register");
 const Login = require("./Controllers/Login");
 const SetName = require("./Controllers/SetName");
+const AddHives = require("./Controllers/AddHives");
 
 const db = knex({
   client: "pg",
@@ -36,53 +37,7 @@ app.post("/login", Login.handleLogin(db, bcrypt));
 
 app.put("/set-name", SetName.handleSetName(db));
 
-app.put("/add-hives", async (req, res) => {
-  const { userName, email, ApHv } = req.body;
-  let valid = true;
-
-  const sentApHv = ApHv.split("-");
-
-  if (sentApHv.length === 2) {
-    db("users")
-      .where({
-        user_name: userName,
-        email: email,
-      })
-      .select("ap_hv")
-      .then((data) => {
-        data = data[0].ap_hv;
-        console.log(data);
-        if (data.includes(ApHv)) {
-          res.status(400).json("already exists");
-          return false;
-        }
-
-        if (valid) {
-          const newApHvString = data + ApHv + ";";
-
-          db("users")
-            .where({
-              user_name: userName,
-              email: email,
-            })
-            .update("ap_hv", newApHvString)
-            .then((newApHvData) => {
-              res.json("Successfuly updated: " + newApHvData);
-            })
-            .catch((error) => {
-              console.log(error);
-              res.status(400).json("Something went wrong");
-              return false;
-            });
-        } else {
-          res.status(400).json("Invalid input");
-          return false;
-        }
-      });
-  } else {
-    res.status(400).json("Invalid input");
-  }
-});
+app.put("/add-hives", AddHives.handleAddHives(db));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
