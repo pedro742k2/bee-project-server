@@ -50,6 +50,7 @@ app.put("/add-hives", (req, res) => {
       })
       .select("ap_hv")
       .then((data) => {
+        console.log(data);
         if (data.includes(ApHv)) {
           valid = false;
         } else {
