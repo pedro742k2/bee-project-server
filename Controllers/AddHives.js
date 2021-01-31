@@ -11,38 +11,49 @@ const handleAddHives = (db) => (req, res) => {
         user_name: userName,
         email: email,
       })
-      .select("id", "ap_hv")
+      .select("ap_hv")
       .then((data) => {
+        let empty = false;
+
         console.log(data);
-        data = data[0].ap_hv;
+        const ApHvFromServer = data[0].ap_hv;
 
-        try {
-          if (data.includes(ApHv)) {
-            res.status(400).json("already exists");
-            return false;
+        if (data?.length >= 1) {
+          try {
+            if (ApHvFromServer.includes(ApHv)) {
+              res.status(400).json("already exists");
+              return false;
+            }
+          } catch {
+            if (ApHvFromServer === null) {
+              empty = true;
+            }
+            // Continues, there are no hives
           }
-        } catch /* (error) */ {
-          // console.log(error);
-          res.status(400).json("Something went wrong");
-          return false;
+
+          let newApHvString = undefined;
+
+          if (empty) {
+            newApHvString = ApHv + ";";
+          } else {
+            newApHvString = ApHvFromServer + ApHv + ";";
+          }
+
+          db("users")
+            .where({
+              user_name: userName,
+              email: email,
+            })
+            .update("ap_hv", newApHvString)
+            .then(() => {
+              res.json("Successfuly updated");
+            })
+            .catch((/* error */) => {
+              // console.log(error);
+              res.status(400).json("Something went wrong");
+              return false;
+            });
         }
-
-        const newApHvString = data + ApHv + ";";
-
-        db("users")
-          .where({
-            user_name: userName,
-            email: email,
-          })
-          .update("ap_hv", newApHvString)
-          .then(() => {
-            res.json("Successfuly updated");
-          })
-          .catch((/* error */) => {
-            // console.log(error);
-            res.status(400).json("Something went wrong");
-            return false;
-          });
       });
   } else {
     res.status(400).json("Invalid input");
