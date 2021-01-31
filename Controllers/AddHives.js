@@ -3,8 +3,6 @@ const handleAddHives = (db) => (req, res) => {
 
   const sentApHv = ApHv.split("-");
 
-  console.log(userName, email, ApHv);
-
   if (sentApHv.length === 2) {
     db("users")
       .where({
@@ -15,7 +13,6 @@ const handleAddHives = (db) => (req, res) => {
       .then((data) => {
         let empty = false;
 
-        console.log(data);
         const ApHvFromServer = data[0].ap_hv;
 
         if (data.length >= 1) {
@@ -48,8 +45,7 @@ const handleAddHives = (db) => (req, res) => {
             .then(() => {
               res.json("Successfuly updated");
             })
-            .catch((/* error */) => {
-              // console.log(error);
+            .catch(() => {
               res.status(400).json("Something went wrong");
               return false;
             });
