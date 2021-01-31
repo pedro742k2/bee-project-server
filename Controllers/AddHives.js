@@ -18,7 +18,7 @@ const handleAddHives = (db) => (req, res) => {
         console.log(data);
         const ApHvFromServer = data[0].ap_hv;
 
-        if (data?.length >= 1) {
+        if (data.length >= 1) {
           try {
             if (ApHvFromServer.includes(ApHv)) {
               res.status(400).json("already exists");
