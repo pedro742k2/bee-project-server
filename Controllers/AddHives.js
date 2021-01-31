@@ -3,6 +3,8 @@ const handleAddHives = (db) => (req, res) => {
 
   const sentApHv = ApHv.split("-");
 
+  console.log(userName, email, ApHv);
+
   if (sentApHv.length === 2) {
     db("users")
       .where({
@@ -18,7 +20,7 @@ const handleAddHives = (db) => (req, res) => {
             return false;
           }
         } catch {
-          res.status(400).json("Something went wrong");
+          res.status(400).json("Something went wrong 1");
           return false;
         }
 
@@ -33,8 +35,9 @@ const handleAddHives = (db) => (req, res) => {
           .then(() => {
             res.json("Successfuly updated");
           })
-          .catch(() => {
-            res.status(400).json("Something went wrong");
+          .catch((error) => {
+            console.log(error);
+            res.status(400).json("Something went wrong 2");
             return false;
           });
       });
