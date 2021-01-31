@@ -11,7 +11,7 @@ const handleAddHives = (db) => (req, res) => {
       })
       .select("ap_hv")
       .then((data) => {
-        data = data[0]?.ap_hv;
+        data = data[0].ap_hv;
         if (data?.includes(ApHv)) {
           res.status(400).json("already exists");
           return false;
