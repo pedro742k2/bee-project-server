@@ -11,19 +11,19 @@ const handleAddHives = (db) => (req, res) => {
         user_name: userName,
         email: email,
       })
-      .select("ap_hv")
+      .select("id", "ap_hv")
       .then((data) => {
         console.log(data);
         data = data[0].ap_hv;
-        console.log(data);
+
         try {
           if (data.includes(ApHv)) {
             res.status(400).json("already exists");
             return false;
           }
-        } catch (error) {
-          console.log(error);
-          res.status(400).json("Something went wrong 1");
+        } catch /* (error) */ {
+          // console.log(error);
+          res.status(400).json("Something went wrong");
           return false;
         }
 
@@ -38,9 +38,9 @@ const handleAddHives = (db) => (req, res) => {
           .then(() => {
             res.json("Successfuly updated");
           })
-          .catch((error) => {
-            console.log(error);
-            res.status(400).json("Something went wrong 2");
+          .catch((/* error */) => {
+            // console.log(error);
+            res.status(400).json("Something went wrong");
             return false;
           });
       });
