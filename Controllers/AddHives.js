@@ -19,7 +19,8 @@ const handleAddHives = (db) => (req, res) => {
             res.status(400).json("already exists");
             return false;
           }
-        } catch {
+        } catch (error) {
+          console.log(error);
           res.status(400).json("Something went wrong 1");
           return false;
         }
