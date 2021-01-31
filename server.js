@@ -10,6 +10,7 @@ const Register = require("./Controllers/Register");
 const Login = require("./Controllers/Login");
 const SetName = require("./Controllers/SetName");
 const AddHives = require("./Controllers/AddHives");
+const GetUsersData = require("./Controllers/GetUserData");
 
 const db = knex({
   client: "pg",
@@ -27,19 +28,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.post("/get-user-data", (req, res) => {
-  const { userName, email } = req.body;
-
-  db("users")
-    .select("name", "ap_hv")
-    .where({ user_name: userName, email: email })
-    .then((ApHv) => {
-      res.json(ApHv);
-    })
-    .catch(() => {
-      res.status(400).json("Unable to consult the database");
-    });
-});
+app.post("/get-user-data", GetUsersData.handleGetUsersData(db));
 
 app.post("/get-data", GetData.handleGetData(db));
 
