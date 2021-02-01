@@ -1,5 +1,5 @@
 const handleAddHives = (db) => (req, res) => {
-  const { userName, email, ApHv } = req.body;
+  const { userName, email, ApHv, add } = req.body;
 
   const sentApHv = ApHv.split("-");
 
@@ -17,23 +17,40 @@ const handleAddHives = (db) => (req, res) => {
 
         if (data.length >= 1) {
           try {
-            if (ApHvFromServer.includes(ApHv)) {
-              res.status(400).json("already exists");
-              return false;
+            if (add) {
+              if (ApHvFromServer.includes(ApHv)) {
+                res.status(400).json("already exists");
+                return false;
+              }
+            } else {
+              if (!ApHvFromServer.includes(ApHv)) {
+                res.status(400).json("This hive no longer exists");
+                return false;
+              }
             }
           } catch {
             if (ApHvFromServer === null) {
               empty = true;
+              if (!add) {
+                res.status(400).json("This hive no longer exists");
+                return false;
+              }
             }
             // Continues, there are no hives
           }
 
           let newApHvString = undefined;
 
-          if (empty) {
+          if (empty && !add) {
+            res.status(400).json("This hive no longer exists");
+            return false;
+          } else if (empty && add) {
             newApHvString = ApHv + ";";
           } else {
-            newApHvString = ApHvFromServer + ApHv + ";";
+            newApHvString = add
+              ? ApHvFromServer + ApHv + ";"
+              : ApHvFromServer.replace(ApHv, "");
+            // newApHvString = ApHvFromServer + ApHv + ";";
           }
 
           db("users")
