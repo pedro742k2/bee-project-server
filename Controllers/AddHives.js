@@ -3,7 +3,7 @@ const handleAddHives = (db) => (req, res) => {
 
   console.log(ApHv.length);
 
-  if (ApHv === "-" || ApHv.length <= 3) {
+  if (ApHv === "-" || ApHv.length < 3) {
     res.json("Invalid input");
   } else {
     const sentApHv = ApHv.split("-");
