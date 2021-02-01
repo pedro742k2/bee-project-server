@@ -2,6 +2,7 @@ const handleAddHives = (db) => (req, res) => {
   const { userName, email, ApHv, add } = req.body;
 
   const sentApHv = ApHv.split("-");
+  console.log(ApHv);
 
   if (sentApHv.length === 2) {
     db("users")
