@@ -49,7 +49,7 @@ const handleAddHives = (db) => (req, res) => {
           } else {
             newApHvString = add
               ? ApHvFromServer + ApHv + ";"
-              : ApHvFromServer.replace(ApHv, "");
+              : ApHvFromServer.replace(ApHv + ";", "");
             // newApHvString = ApHvFromServer + ApHv + ";";
           }
 
