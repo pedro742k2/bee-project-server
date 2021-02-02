@@ -16,7 +16,7 @@ const handleGetData = (db) => (req, res) => {
     db.select("temperature", "humidity", "weight", "battery", "readings_date")
       .from("apiaries")
       .where({
-        hiveId: hiveId,
+        hive_id: hiveId,
       })
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
