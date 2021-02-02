@@ -130,8 +130,8 @@ const handleAddHives = (db) => (req, res) => {
           db("hives_info")
             .where("hive_id", hiveId)
             .update({
-              apiary_number: ApHv.split("-")[0],
-              hive_number: ApHv.split("-")[1],
+              apiary_number: IdApHv.split("-")[1],
+              hive_number: IdApHv.split("-")[2],
             })
             .then(db.commit)
             .catch(db.rollback);
