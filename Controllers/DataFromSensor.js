@@ -1,9 +1,6 @@
 const handleDataFromSensor = (db) => (req, res) => {
   const { hiveId, readDate, data } = req.body;
 
-  // const apiary = ApHv.split("-")[0];
-  // const hive = ApHv.split("-")[1];
-
   const readOn = readDate.split("-");
   const readings_date = `${readOn[0]}/${readOn[1]}/${readOn[2]} ${readOn[3]}:${readOn[4]}`;
 

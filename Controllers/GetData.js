@@ -1,8 +1,8 @@
 const handleGetData = (db) => (req, res) => {
-  const ApHv = req.body.ApHv[0];
-  const ap = ApHv.split("-")[0];
-  const hv = ApHv.split("-")[1];
-  const { currentDate, measurementType } = req.body;
+  // const ApHv = req.body.ApHv[0];
+  // const ap = ApHv.split("-")[0];
+  // const hv = ApHv.split("-")[1];
+  const { hiveId, currentDate, measurementType } = req.body;
 
   const date = currentDate.split("-");
   const day = date[2];
@@ -16,8 +16,7 @@ const handleGetData = (db) => (req, res) => {
     db.select("temperature", "humidity", "weight", "battery", "readings_date")
       .from("apiaries")
       .where({
-        apiary: ap,
-        hive: hv,
+        hiveId: hiveId,
       })
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
