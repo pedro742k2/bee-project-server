@@ -165,11 +165,11 @@ const handleAddHives = (db) => (req, res) => {
             console.log(newData);
 
             db("users")
+              .insert("hives_id", newData)
               .where({
                 user_name: userName,
                 email: email,
               })
-              .insert("hives_id", newData)
               .then(() => {
                 res.json("Successfuly updated");
               })
