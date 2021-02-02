@@ -18,7 +18,6 @@ const handleGetData = (db) => (req, res) => {
       .whereRaw("EXTRACT(DAY FROM readings_date) = ?", [day])
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
       .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
-      .orderBy("readings_date")
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(value.readings_date).getHours();

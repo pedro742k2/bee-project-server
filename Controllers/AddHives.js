@@ -47,7 +47,7 @@ const handleAddHives = (db) => (req, res) => {
         .where("hive_id", hiveId)
         .then((data) => {
           if (data.length === 0) {
-            res.json("Unable to remove, that hive doesn't exist anymore");
+            res.json("No longer exists");
           } else {
             db("hives_info")
               .where("hive_id", hiveId)
@@ -92,11 +92,11 @@ const handleAddHives = (db) => (req, res) => {
                   res.status(400).json("Something went wrong");
                 });
             } else {
-              res.json("Unable to remove, that hive doesn't exist anymore");
+              res.json("No longer exists");
             }
           } else if (data.includes(hiveId)) {
             if (add) {
-              res.json("This hive id already exists in your account");
+              res.json("Already exists");
             } else {
               const newData = data.replace(hiveId + ";", "");
               db("users")
