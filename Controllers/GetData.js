@@ -70,12 +70,12 @@ const handleGetData = (db) => (req, res) => {
               lastValues: target,
             });
           })
-          .catch((error) => {
-            res.json("Unable to get any data:", error);
+          .catch(() => {
+            res.json("Unable to get any data:");
           });
       })
-      .catch((error) => {
-        res.json(`Unable to get data from hive ${hiveId}\nError: ${error}`);
+      .catch(() => {
+        res.json(`Unable to get data`);
       });
   } else if (measurementType === "weekly") {
     res.json("not available");
