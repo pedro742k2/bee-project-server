@@ -162,6 +162,7 @@ const handleAddHives = (db) => (req, res) => {
 
           if (data === null) {
             const newData = hiveId + ";";
+            console.log(newData);
 
             db("users")
               .where({
@@ -190,7 +191,8 @@ const handleAddHives = (db) => (req, res) => {
               .then(() => {
                 res.json("Successfuly updated");
               })
-              .catch(() => {
+              .catch((error) => {
+                console.log(error);
                 res.status(400).json("Something went wrong");
               });
           }
