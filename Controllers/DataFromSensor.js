@@ -10,10 +10,11 @@ const handleDataFromSensor = (db) => (req, res) => {
   db.select("readings_date")
     .from("apiaries")
     .where({
-      readings_date: readings_date,
       hive_id: hiveId,
+      readings_date: readings_date,
     })
     .then((checkDate) => {
+      console.log(checkDate);
       if (checkDate.length >= 1) {
         res.json({
           stored: false,
@@ -43,10 +44,10 @@ const handleDataFromSensor = (db) => (req, res) => {
         });
       }
     })
-    .catch((error) => {
+    .catch(() => {
       res.json({
         stored: false,
-        msg: "Unable to consult the database " + error,
+        msg: "Unable to consult the database",
       });
     });
 };
