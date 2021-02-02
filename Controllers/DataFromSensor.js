@@ -43,10 +43,10 @@ const handleDataFromSensor = (db) => (req, res) => {
         });
       }
     })
-    .catch(() => {
+    .catch((error) => {
       res.json({
         stored: false,
-        msg: "Unable to consult the database",
+        msg: "Unable to consult the database " + error,
       });
     });
 };
