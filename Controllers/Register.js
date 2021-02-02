@@ -12,7 +12,8 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       .then((data) => {
         res.json(data);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         res.json("Something went wrong");
       });
   });
