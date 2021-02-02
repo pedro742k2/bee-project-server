@@ -1,7 +1,7 @@
 const handleLogin = (db, bcrypt) => (req, res) => {
   const { user, password } = req.body;
 
-  db.select("user_name", "email", "password", "ap_hv", "name")
+  db.select("user_name", "email", "password", "name", "hives_id")
     .from("users")
     .where("user_name", user)
     .orWhere("email", user)

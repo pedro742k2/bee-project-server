@@ -160,7 +160,22 @@ const handleAddHives = (db) => (req, res) => {
           data = data[0].hives_id;
           console.log(data);
 
-          if (data.includes(hiveId)) {
+          if (data === null) {
+            const newData = hiveId + ";";
+
+            db("users")
+              .where({
+                user_name: userName,
+                email: email,
+              })
+              .insert("hives_id", newData)
+              .then(() => {
+                res.json("Successfuly updated");
+              })
+              .catch(() => {
+                res.status(400).json("Something went wrong");
+              });
+          } else if (data.includes(hiveId)) {
             res.json("This hive id already exists in your account");
           } else {
             const newData = data + hiveId + ";";
