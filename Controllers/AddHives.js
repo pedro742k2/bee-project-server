@@ -6,7 +6,7 @@ const handleAddHives = (db) => (req, res) => {
   const apiaryNumber = IdApHv.split("-")[1];
   const hiveNumber = IdApHv.split("-")[2];
 
-  if (IdApHv.length < 5) {
+  if (IdApHv.length < 5 && add === true) {
     res.json("Invalid input");
   } else {
     /* Adding apiary and hive number to hive id if add = true */
