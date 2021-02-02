@@ -28,19 +28,26 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.post("/get-user-data", GetUsersData.handleGetUsersData(db));
-
-app.post("/get-data", GetData.handleGetData(db));
-
+/* Get readings from the Arduino */
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
-app.post("/register", Register.handleRegister(db, bcrypt));
+/* Send Arduino data stored in the database */
+app.post("/get-data", GetData.handleGetData(db));
 
+/* Send user data (name and hives) */
+app.post("/get-user-data", GetUsersData.handleGetUsersData(db));
+
+/* Check login and send token */
 app.post("/login", Login.handleLogin(db, bcrypt));
 
-app.put("/set-name", SetName.handleSetName(db));
+/* Register user and send token */
+app.post("/register", Register.handleRegister(db, bcrypt));
 
+/* Add or remove hives */
 app.put("/add-hives", AddHives.handleAddHives(db));
+
+/* Set a name for a specific user */
+app.put("/set-name", SetName.handleSetName(db));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);

@@ -1,8 +1,8 @@
 const handleDataFromSensor = (db) => (req, res) => {
-  const { ApHv, readDate, data } = req.body;
+  const { hiveId, readDate, data } = req.body;
 
-  const apiary = ApHv.split("-")[0];
-  const hive = ApHv.split("-")[1];
+  // const apiary = ApHv.split("-")[0];
+  // const hive = ApHv.split("-")[1];
 
   const readOn = readDate.split("-");
   const readings_date = `${readOn[0]}/${readOn[1]}/${readOn[2]} ${readOn[3]}:${readOn[4]}`;
@@ -11,8 +11,7 @@ const handleDataFromSensor = (db) => (req, res) => {
     .from("apiaries")
     .where({
       readings_date: readings_date,
-      apiary: apiary,
-      hive: hive,
+      hive_id: hiveId,
     })
     .then((checkDate) => {
       if (checkDate.length >= 1) {
@@ -28,8 +27,7 @@ const handleDataFromSensor = (db) => (req, res) => {
 
         db("apiaries")
           .insert({
-            apiary,
-            hive,
+            hive_id: hiveId,
             temperature: temp,
             humidity: hmdt,
             weight,
@@ -41,7 +39,7 @@ const handleDataFromSensor = (db) => (req, res) => {
 
         res.json({
           stored: true,
-          msg: "Successfully stored on the database",
+          msg: "Successfully stored",
         });
       }
     })
