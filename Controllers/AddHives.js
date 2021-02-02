@@ -149,7 +149,36 @@ const handleAddHives = (db) => (req, res) => {
       });
 
     if (valid) {
-      res.json("Nice");
+      db("users")
+        .select("hive_id")
+        .where({
+          user_name: userName,
+          email: email,
+        })
+        .then((data) => {
+          data = data[0].hive_id;
+          console.log(data);
+
+          if (data.includes(hiveId)) {
+            res.json("This hive id already exists in your account");
+          } else {
+            const newData = data + hiveId + ";";
+
+            db("users")
+              .where({
+                user_name: userName,
+                email: email,
+              })
+              .insert("hive_id", newData)
+              .then(() => {
+                res.json("Successfuly updated");
+              })
+              .catch(() => {
+                res.status(400).json("Something went wrong");
+              });
+          }
+          console.log(data);
+        });
     }
   }
 
