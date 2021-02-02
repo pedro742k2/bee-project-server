@@ -150,13 +150,14 @@ const handleAddHives = (db) => (req, res) => {
 
     if (valid) {
       db("users")
-        .select("hive_id")
+        .select("hives_id")
         .where({
           user_name: userName,
           email: email,
         })
         .then((data) => {
-          data = data[0].hive_id;
+          console.log(data);
+          data = data[0].hives_id;
           console.log(data);
 
           if (data.includes(hiveId)) {
@@ -169,7 +170,7 @@ const handleAddHives = (db) => (req, res) => {
                 user_name: userName,
                 email: email,
               })
-              .insert("hive_id", newData)
+              .insert("hives_id", newData)
               .then(() => {
                 res.json("Successfuly updated");
               })
