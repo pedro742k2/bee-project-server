@@ -172,7 +172,8 @@ const handleAddHives = (db) => (req, res) => {
               .then(() => {
                 res.json("Successfuly updated");
               })
-              .catch(() => {
+              .catch((error) => {
+                console.log(error);
                 res.status(400).json("Something went wrong");
               });
           } else if (data.includes(hiveId)) {
@@ -193,7 +194,6 @@ const handleAddHives = (db) => (req, res) => {
                 res.status(400).json("Something went wrong");
               });
           }
-          console.log(data);
         });
     }
   }
