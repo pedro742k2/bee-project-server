@@ -78,9 +78,7 @@ const handleGetData = (db) => (req, res) => {
           });
       })
       .catch((error) => {
-        res.json(
-          `Unable to get data from Apiary ${ap} - Hive ${hv}\nError: ${error}`
-        );
+        res.json(`Unable to get data from hive ${hiveId}\nError: ${error}`);
       });
   } else if (measurementType === "weekly") {
     res.json("not available");
