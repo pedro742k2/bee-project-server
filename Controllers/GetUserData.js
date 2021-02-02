@@ -12,6 +12,7 @@ const handleGetUsersData = (db) => (req, res) => {
         if (hivesId.includes(id)) {
           db("hives_info")
             .select("hive_id", "apiary_number", "hive_number")
+            .orderBy("hive_number")
             .where("hive_id", id)
             .then((data) => {
               res.json(data);
