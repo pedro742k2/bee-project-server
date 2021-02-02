@@ -1,7 +1,4 @@
 const handleGetData = (db) => (req, res) => {
-  // const ApHv = req.body.ApHv[0];
-  // const ap = ApHv.split("-")[0];
-  // const hv = ApHv.split("-")[1];
   const { hiveId, currentDate, measurementType } = req.body;
 
   const date = currentDate.split("-");

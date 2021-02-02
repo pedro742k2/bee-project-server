@@ -12,7 +12,7 @@ const handleLogin = (db, bcrypt) => (req, res) => {
             res.json({
               userName: user[0].user_name,
               email: user[0].email,
-              ApHv: user[0].ap_hv,
+              hivesId: user[0].hives_id,
               name: user[0].name,
             });
           } else {
