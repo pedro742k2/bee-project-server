@@ -62,8 +62,7 @@ const handleGetData = (db) => (req, res) => {
         )
           .from("apiaries")
           .where({
-            apiary: ap,
-            hive: hv,
+            hive_id: hiveId,
           })
           .orderBy("readings_date")
           .then((lastValues) => {
