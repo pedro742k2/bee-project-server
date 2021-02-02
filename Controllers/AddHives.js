@@ -111,18 +111,23 @@ const handleAddHives = (db) => (req, res) => {
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
 
+  const hiveId = IdApHv.split("-")[0];
+  const apiaryNumber = IdApHv.split("-")[1];
+  const hiveNumber = IdApHv.split("-")[2];
+
   if (IdApHv.length < 5) {
     res.json("Invalid input");
   } else {
     db("hives_info")
       .select("hive_id")
+      .where("hive_id", hiveId)
       .then((data) => {
         if (data.length === 0) {
           db("hives_info")
             .insert({
-              hive_id: IdApHv.split("-")[0],
-              apiary_number: IdApHv.split("-")[1],
-              hive_number: IdApHv.split("-")[2],
+              hive_id: hiveId,
+              apiary_number: apiaryNumber,
+              hive_number: hiveNumber,
             })
             .then(db.commit)
             .catch(db.rollback);
@@ -130,8 +135,8 @@ const handleAddHives = (db) => (req, res) => {
           db("hives_info")
             .where("hive_id", hiveId)
             .update({
-              apiary_number: IdApHv.split("-")[1],
-              hive_number: IdApHv.split("-")[2],
+              apiary_number: apiaryNumber,
+              hive_number: hiveNumber,
             })
             .then(db.commit)
             .catch(db.rollback);
