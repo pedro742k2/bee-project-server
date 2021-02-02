@@ -49,7 +49,11 @@ const handleAddHives = (db) => (req, res) => {
           if (data.length === 0) {
             res.json("Unable to remove, that hive doesn't exist anymore");
           } else {
-            db("hives_info").where("hive_id", hiveId).del();
+            db("hives_info")
+              .where("hive_id", hiveId)
+              .del()
+              .then(db.commit)
+              .catch(db.rollback);
           }
         })
         .catch(() => {
