@@ -111,7 +111,7 @@ const handleAddHives = (db) => (req, res) => {
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
 
-  if (ApHv.length < 5) {
+  if (IdApHv.length < 5) {
     res.json("Invalid input");
   } else {
     db("hives_info")
