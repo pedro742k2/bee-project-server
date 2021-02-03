@@ -31,6 +31,7 @@ const handleDataFromSensor = (db) => (req, res) => {
             battery,
             readings_date,
           })
+          .returning("hive_id")
           .then((data) => {
             console.log(data);
             db.commit;
