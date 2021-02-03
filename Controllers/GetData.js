@@ -22,8 +22,8 @@ const handleGetData = (db) => (req, res) => {
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(value.readings_date).getHours();
-          // hour =
-          // valueHour
+          // hour = 0
+          // valueHour =
           if (valueHour === hour) {
             firstDataFromHours.push(value);
             hour++;
@@ -34,7 +34,7 @@ const handleGetData = (db) => (req, res) => {
                 const faultyHour = new Date(
                   `${validDate.getFullYear()}-${
                     validDate.getMonth() + 1
-                  }-${validDate.getDate()} ${i}:${validDate.getMinutes()}`
+                  }-${validDate.getDate()} ${i}:0`
                 );
 
                 firstDataFromHours.push({
