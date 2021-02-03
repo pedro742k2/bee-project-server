@@ -31,10 +31,18 @@ const handleDataFromSensor = (db) => (req, res) => {
             battery,
             readings_date,
           })
-          .returning("hive_id")
+          .returning(["hive_id"])
           .then((data) => {
-            console.log(data);
             db.commit;
+
+            db("registered_hives")
+              .whereNot("hive_id", data[0])
+              .insert({
+                hive_id: data[0],
+                registered,
+              })
+              .then(db.commit)
+              .catch(db.rollback);
           })
           .catch(() => {
             db.rollback;
