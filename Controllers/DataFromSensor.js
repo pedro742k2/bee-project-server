@@ -42,7 +42,10 @@ const handleDataFromSensor = (db) => (req, res) => {
                 registered,
               })
               .then(db.commit)
-              .catch(db.rollback);
+              .catch((error) => {
+                db.rollback;
+                console.log(error);
+              });
           })
           .catch(() => {
             db.rollback;
