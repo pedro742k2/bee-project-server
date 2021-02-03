@@ -2,6 +2,17 @@ const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
   db("users")
+    .join("hives_info", "users.hives_id", "=", "hives_info.hive_id")
+    .where({ user_name: userName, email: email, hiveid: id })
+    .select("hive_id", "apiary_number", "hive_number")
+    .then((hivesId) => {
+      res.json(hivesId);
+    })
+    .catch(() => {
+      res.status(400).json("Unable to consult the database");
+    });
+
+  /* db("users")
     .select("hives_id")
     .where({ user_name: userName, email: email })
     .then((hivesId) => {
@@ -25,7 +36,7 @@ const handleGetUsersData = (db) => (req, res) => {
     })
     .catch(() => {
       res.status(400).json("Unable to consult the database");
-    });
+    }); */
 };
 
 module.exports = {
