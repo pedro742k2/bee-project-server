@@ -31,8 +31,9 @@ const handleDataFromSensor = (db) => (req, res) => {
             battery,
             readings_date,
           })
-          .returning(["hive_id"])
+          .returning("hive_id")
           .then((data) => {
+            console.log(data);
             db.commit;
 
             db("registered_hives")
@@ -41,10 +42,13 @@ const handleDataFromSensor = (db) => (req, res) => {
                 hive_id: data[0],
                 registered_date: readings_date,
               })
-              .then(db.commit)
-              .catch((error) => {
+              .then(() => {
+                db.commit;
+                console.log("Ok");
+              })
+              .catch((/* error */) => {
                 db.rollback;
-                console.log(error);
+                // console.log(error);
               });
           })
           .catch(() => {
