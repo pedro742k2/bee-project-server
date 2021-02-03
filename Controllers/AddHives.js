@@ -1,10 +1,18 @@
-const handleAddHives = (db) => (req, res) => {
+const handleAddHives = (db) => async (req, res) => {
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
 
   const hiveId = IdApHv.split("-")[0];
   const apiaryNumber = IdApHv.split("-")[1];
   const hiveNumber = IdApHv.split("-")[2];
+
+  const exists = await db("registered_hives")
+    .select("hive_id")
+    .where("hive_id", hiveId)
+    .then((data) => data)
+    .catch(() => false);
+
+  console.log("Exists? =>", exists);
 
   if (IdApHv.length < 5 && add === true) {
     res.json("Invalid input");
