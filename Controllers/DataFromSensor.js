@@ -23,17 +23,16 @@ const handleDataFromSensor = (db) => (req, res) => {
         const weight = data.split("-")[2];
         const battery = data.split("-")[3];
 
-        db("apiaries")
-          .insert({
-            hive_id: hiveId,
-            temperature: temp,
-            humidity: hmdt,
-            weight,
-            battery,
-            readings_date,
-          })
-          .then(db.commit)
-          .catch(db.rollback);
+        db("apiaries").insert({
+          hive_id: hiveId,
+          temperature: temp,
+          humidity: hmdt,
+          weight,
+          battery,
+          readings_date,
+        });
+        /* .then(db.commit)
+          .catch(db.rollback); */
 
         res.json({
           stored: true,
