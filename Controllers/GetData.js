@@ -11,6 +11,7 @@ const handleGetData = (db) => (req, res) => {
 
   if (measurementType === "daily") {
     db.select("temperature", "humidity", "weight", "battery", "readings_date")
+      .orderBy("readings_date")
       .from("apiaries")
       .where({
         hive_id: hiveId,
@@ -21,6 +22,8 @@ const handleGetData = (db) => (req, res) => {
       .then((data) => {
         data.forEach((value) => {
           const valueHour = new Date(value.readings_date).getHours();
+          // hour =
+          // valueHour
           if (valueHour === hour) {
             firstDataFromHours.push(value);
             hour++;
