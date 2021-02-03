@@ -39,7 +39,7 @@ const handleDataFromSensor = (db) => (req, res) => {
               .whereNot("hive_id", data[0])
               .insert({
                 hive_id: data[0],
-                readings_date,
+                registered_date: readings_date,
               })
               .then(db.commit)
               .catch((error) => {
