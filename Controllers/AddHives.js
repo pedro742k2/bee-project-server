@@ -12,9 +12,10 @@ const handleAddHives = (db) => async (req, res) => {
     .then((data) => data)
     .catch(() => false);
 
-  console.log("Exists? =>", exists);
-
-  if (IdApHv.length < 5 && add === true) {
+  if (add && exists.length === 0) {
+    res.json("Hive not registered");
+    return false;
+  } else if (IdApHv.length < 5 && add === true) {
     res.json("Invalid input");
   } else {
     /* Adding apiary and hive number to hive id if add = true */
