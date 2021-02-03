@@ -11,7 +11,6 @@ const handleDataFromSensor = (db) => (req, res) => {
       readings_date: readings_date,
     })
     .then((checkDate) => {
-      console.log(checkDate);
       if (checkDate.length >= 1) {
         res.json({
           stored: false,
