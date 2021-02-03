@@ -33,9 +33,6 @@ const handleDataFromSensor = (db) => (req, res) => {
           })
           .returning("hive_id")
           .then((data) => {
-            console.log(data);
-            db.commit;
-
             db("registered_hives")
               .whereNot("hive_id", data[0])
               .insert({
@@ -46,9 +43,8 @@ const handleDataFromSensor = (db) => (req, res) => {
                 db.commit;
                 console.log("Ok");
               })
-              .catch((/* error */) => {
+              .catch(() => {
                 db.rollback;
-                // console.log(error);
               });
           })
           .catch(() => {
