@@ -8,8 +8,8 @@ const handleGetUsersData = (db) => (req, res) => {
     .then((hivesId) => {
       res.json(hivesId);
     })
-    .catch(() => {
-      res.status(400).json("Unable to consult the database");
+    .catch((error) => {
+      res.status(400).json("Unable to consult the database: " + error);
     });
 
   /* db("users")
