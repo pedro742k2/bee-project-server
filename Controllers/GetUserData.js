@@ -1,7 +1,7 @@
 const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
-  db.select("*")
+  db.select("hive_id", "apiary_number", "hive_number")
     .from("users")
     .joinRaw(
       "JOIN hives_info ON (users.hives_id like '%' || hives_info.hive_id || '%')"
