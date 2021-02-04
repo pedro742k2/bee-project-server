@@ -152,7 +152,7 @@ const handleAddHives = (db) => async (req, res) => {
                   res.status(400).json("Something went wrong");
                 });
             } else {
-              res.status(400).json("Something went wrong 2");
+              res.status(400).json("Something went wrong");
             }
           }
         });
