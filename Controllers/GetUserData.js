@@ -1,19 +1,6 @@
 const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
-  db.select("hive_id", "hive_number", "apiary_number")
-    .raw("from users, hives_info")
-    .whereRaw(
-      "user_name = 'batista742k2' AND email='pmpb742k2@gmail.com' AND hives_id LIKE '%' || hive_id || '%'"
-    )
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).json("Server error");
-    });
-
   // db.select("*")
   //   .from("users")
   //   // .where({ user_name: userName, email: email, hives_id: id })
@@ -29,7 +16,7 @@ const handleGetUsersData = (db) => (req, res) => {
   //     res.status(400).json("Unable to consult the database");
   //   });
 
-  /* db("users")
+  db("users")
     .select("hives_id")
     .where({ user_name: userName, email: email })
     .then((hivesId) => {
@@ -53,7 +40,7 @@ const handleGetUsersData = (db) => (req, res) => {
     })
     .catch(() => {
       res.status(400).json("Unable to consult the database");
-    }); */
+    });
 };
 
 module.exports = {
