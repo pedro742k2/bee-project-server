@@ -3,10 +3,11 @@ const handleGetUsersData = (db) => (req, res) => {
 
   db.select("*")
     .from("users")
-    .where({ user_name: userName, email: email, hives_id: id })
     .joinRaw(
       "JOIN hives_info ON (users.hives_id like '%' || hives_info.hive_id || '%')"
     )
+    // .where({ user_name: userName, email: email, hives_id: id })
+    .where({ user_name: userName, email: email })
     /* .join("hives_info", function () {
       this.on("hives_id", "like", "% || hive_id || %");
     }) */
