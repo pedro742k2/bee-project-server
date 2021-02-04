@@ -2,7 +2,7 @@ const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
   db("users")
-    .where({ user_name: userName, email: email, hives_id: id })
+    // .where({ user_name: userName, email: email, hives_id: id })
     .join("hives_info", function () {
       this.on("users.hives_id", "like", "hives_info.hive_id");
     })
