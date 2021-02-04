@@ -126,7 +126,7 @@ const handleAddHives = (db) => async (req, res) => {
                   res.json("Successfully removed");
                 })
                 .catch(() => {
-                  res.status(400).json("Something went wrong");
+                  res.status(400).json("Something went wrong 1");
                 });
             }
           } else {
@@ -146,7 +146,7 @@ const handleAddHives = (db) => async (req, res) => {
                   res.status(400).json("Something went wrong");
                 });
             } else {
-              res.status(400).json("Something went wrong");
+              res.status(400).json("Something went wrong 2");
             }
           }
         });
