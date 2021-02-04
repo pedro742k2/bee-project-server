@@ -3,7 +3,9 @@ const handleGetUsersData = (db) => (req, res) => {
 
   db("users")
     .where({ user_name: userName, email: email, hives_id: id })
-    .join("hives_info")
+    .join("hives_info", () => {
+      this.on("users.hives_id", "like", "hives_info.hive_id");
+    })
     .select("user_name", "email", "hive_id", "apiary_number", "hive_number")
     .then((hivesId) => {
       res.json(hivesId);
