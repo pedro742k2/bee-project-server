@@ -2,7 +2,7 @@ const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
   db.select("hive_id", "hive_number", "apiary_number")
-    .from("users", "hives_info")
+    .raw("from users, hives_info")
     .whereRaw(
       "user_name = 'batista742k2' AND email='pmpb742k2@gmail.com' AND hives_id LIKE '%' || hive_id || '%'"
     )
