@@ -94,7 +94,7 @@ const handleAddHives = (db) => async (req, res) => {
                 })
                 .update("hives_id", newData)
                 .then(() => {
-                  res.json("Successfuly updated");
+                  res.json("Successfully updated");
                 })
                 .catch((error) => {
                   console.log(error);
@@ -115,7 +115,7 @@ const handleAddHives = (db) => async (req, res) => {
                 })
                 .update("hives_id", newData)
                 .then(() => {
-                  res.json("Successfuly removed");
+                  res.json("Successfully removed");
                 })
                 .catch(() => {
                   res.status(400).json("Something went wrong");
@@ -132,7 +132,7 @@ const handleAddHives = (db) => async (req, res) => {
                 })
                 .update("hives_id", newData)
                 .then(() => {
-                  res.json("Successfuly added");
+                  res.json("Successfully added");
                 })
                 .catch(() => {
                   res.status(400).json("Something went wrong");
