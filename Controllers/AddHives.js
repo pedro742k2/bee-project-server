@@ -87,6 +87,8 @@ const handleAddHives = (db) => async (req, res) => {
         .then((data) => {
           data = data[0].hives_id;
 
+          console.log(`db: ${data} | hiveId: ${hiveId}`);
+
           if (data === null) {
             if (add) {
               const newData = hiveId + ";";
@@ -126,7 +128,7 @@ const handleAddHives = (db) => async (req, res) => {
                   res.json("Successfully removed");
                 })
                 .catch(() => {
-                  res.status(400).json("Something went wrong 1");
+                  res.status(400).json("Something went wrong");
                 });
             }
           } else {
