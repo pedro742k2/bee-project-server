@@ -1,6 +1,7 @@
 const handleAddHives = (db) => async (req, res) => {
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
+  let edited = false;
 
   const hiveId = IdApHv.split("-")[0];
   const apiaryNumber = IdApHv.split("-")[1];
@@ -18,7 +19,6 @@ const handleAddHives = (db) => async (req, res) => {
   } else if (IdApHv.length < 5 && add === true) {
     res.json("Invalid input");
   } else {
-    /* Adding apiary and hive number to hive id if add = true */
     if (add) {
       db("hives_info")
         .select("hive_id")
@@ -31,7 +31,10 @@ const handleAddHives = (db) => async (req, res) => {
                 apiary_number: apiaryNumber,
                 hive_number: hiveNumber,
               })
-              .then(db.commit)
+              .then(() => {
+                edited = true;
+                db.commit;
+              })
               .catch(db.rollback);
           } else {
             db("hives_info")
@@ -40,7 +43,10 @@ const handleAddHives = (db) => async (req, res) => {
                 apiary_number: apiaryNumber,
                 hive_number: hiveNumber,
               })
-              .then(db.commit)
+              .then(() => {
+                edited = true;
+                db.commit;
+              })
               .catch(db.rollback);
           }
         })
@@ -50,7 +56,6 @@ const handleAddHives = (db) => async (req, res) => {
           return false;
         });
     } else {
-      /* Removing all hive_id (including) info if add = false */
       db("hives_info")
         .select("hive_id")
         .where("hive_id", hiveId)
@@ -96,8 +101,7 @@ const handleAddHives = (db) => async (req, res) => {
                 .then(() => {
                   res.json("Successfully updated");
                 })
-                .catch((error) => {
-                  console.log(error);
+                .catch(() => {
                   res.status(400).json("Something went wrong");
                 });
             } else {
@@ -105,7 +109,11 @@ const handleAddHives = (db) => async (req, res) => {
             }
           } else if (data.includes(hiveId)) {
             if (add) {
-              res.json("Already exists");
+              if (edited) {
+                res.json("Edited");
+              } else {
+                res.json("Already exists");
+              }
             } else {
               const newData = data.replace(hiveId + ";", "");
               db("users")
