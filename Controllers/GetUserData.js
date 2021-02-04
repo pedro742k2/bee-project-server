@@ -1,20 +1,33 @@
 const handleGetUsersData = (db) => (req, res) => {
   const { userName, email, id, getHivesId } = req.body;
 
-  db.select("*")
-    .from("users")
-    // .where({ user_name: userName, email: email, hives_id: id })
-    .join("hives_info", function () {
-      this.on("hives_id", "like", `% || ${id} || %`);
-    })
-    // .select("user_name", "email", "hive_id", "apiary_number", "hive_number")
-    .then((hivesId) => {
-      res.json(hivesId);
+  db.select("hive_id", "hive_number", "apiary_number")
+    .from("users", "hives_info")
+    .whereRaw(
+      "user_name = 'batista742k2' AND email='pmpb742k2@gmail.com' AND hives_id LIKE '%' || hive_id || '%'"
+    )
+    .then((data) => {
+      res.json(data);
     })
     .catch((error) => {
       console.log(error);
-      res.status(400).json("Unable to consult the database");
+      res.status(400).json("Server error");
     });
+
+  // db.select("*")
+  //   .from("users")
+  //   // .where({ user_name: userName, email: email, hives_id: id })
+  //   .join("hives_info", function () {
+  //     this.on("hives_id", "like", `% || ${id} || %`);
+  //   })
+  //   // .select("user_name", "email", "hive_id", "apiary_number", "hive_number")
+  //   .then((hivesId) => {
+  //     res.json(hivesId);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     res.status(400).json("Unable to consult the database");
+  //   });
 
   /* db("users")
     .select("hives_id")
