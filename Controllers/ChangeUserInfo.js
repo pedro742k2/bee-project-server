@@ -4,7 +4,7 @@ const handleChangeUserInfo = (db) => (req, res) => {
   db("users")
     .where({ user_name: userName, email: email })
     .update(field, value)
-    .returning("user_name", "email", "name", "hives_id")
+    .returning(["user_name", "email", "name", "hives_id"])
     .then((data) => {
       res.json("Updated successfully " + data);
     })
