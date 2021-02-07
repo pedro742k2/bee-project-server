@@ -8,7 +8,7 @@ const DataFromSensor = require("./Controllers/DataFromSensor");
 const GetData = require("./Controllers/GetData");
 const Register = require("./Controllers/Register");
 const Login = require("./Controllers/Login");
-const SetName = require("./Controllers/SetName");
+const ChangeUserInfo = require("./Controllers/ChangeUserInfo");
 const AddHives = require("./Controllers/AddHives");
 const GetUsersData = require("./Controllers/GetUserData");
 
@@ -47,7 +47,7 @@ app.post("/register", Register.handleRegister(db, bcrypt));
 app.put("/add-hives", AddHives.handleAddHives(db));
 
 /* Set a name for a specific user */
-app.put("/set-name", SetName.handleSetName(db));
+app.put("/set-name", ChangeUserInfo.handleChangeUserInfo(db));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
