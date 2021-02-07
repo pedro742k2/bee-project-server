@@ -47,7 +47,7 @@ app.post("/register", Register.handleRegister(db, bcrypt));
 app.put("/add-hives", AddHives.handleAddHives(db));
 
 /* Set a name for a specific user */
-app.put("/set-name", ChangeUserInfo.handleChangeUserInfo(db));
+app.put("/change-user-info", ChangeUserInfo.handleChangeUserInfo(db));
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);
