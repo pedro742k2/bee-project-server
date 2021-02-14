@@ -1,6 +1,4 @@
 const handleGetData = (db) => (req, res) => {
-  console.log("GET DATA");
-
   const { hiveId, currentDate, measurementType } = req.body;
 
   const date = currentDate.split("-");

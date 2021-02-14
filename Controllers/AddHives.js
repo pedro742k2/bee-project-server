@@ -1,6 +1,4 @@
 const handleAddHives = (db) => async (req, res) => {
-  console.log("ADD HIVES");
-
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
   let edited = false;

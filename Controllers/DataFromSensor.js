@@ -1,6 +1,4 @@
 const handleDataFromSensor = (db) => (req, res) => {
-  console.log("DATA FROM SENSOR");
-
   const { hiveId, readDate, data } = req.body;
 
   const readOn = readDate.split("-");

@@ -1,6 +1,4 @@
 const handleChangeUserInfo = (db) => (req, res) => {
-  console.log("CHANGE USER INFO");
-
   const { userName, email, field, value } = req.body;
 
   db("users")

@@ -2,8 +2,6 @@ const { loginValidation } = require("../../validation/InputSyntax");
 const jwt = require("jsonwebtoken");
 
 const handleLogin = (db, bcrypt) => (req, res) => {
-  console.log("LOGIN");
-
   const { error } = loginValidation(req.body);
 
   if (error) return res.status(400).json(error?.details[0]?.message);
