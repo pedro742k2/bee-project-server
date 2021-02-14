@@ -1,5 +1,6 @@
 const handleGetUsersData = (db) => (req, res) => {
-  // const { userName, email, id, getHivesId } = req.body;
+  console.log("GET USER DATA");
+
   const { userName, email } = req.body;
 
   db.select("hive_id", "apiary_number", "hive_number")

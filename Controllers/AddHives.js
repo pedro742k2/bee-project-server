@@ -1,4 +1,6 @@
 const handleAddHives = (db) => async (req, res) => {
+  console.log("ADD HIVES");
+
   const { userName, email, IdApHv, add } = req.body;
   let valid = true;
   let edited = false;
@@ -86,12 +88,6 @@ const handleAddHives = (db) => async (req, res) => {
         })
         .then((data) => {
           data = data[0].hives_id;
-
-          console.log(
-            `db: ${data} | hiveId: ${hiveId} | includes: ${data.includes(
-              hiveId
-            )}`
-          );
 
           if (data === null) {
             if (add) {
