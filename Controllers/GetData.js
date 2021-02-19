@@ -10,7 +10,14 @@ const handleGetData = (db) => (req, res) => {
   let hour = 0;
 
   if (measurementType === "daily") {
-    db.select("temperature", "humidity", "weight", "battery", "readings_date")
+    db.select(
+      "external_temperature",
+      "internal_temperature",
+      "humidity",
+      "weight",
+      "battery",
+      "readings_date"
+    )
       .orderBy("readings_date")
       .from("apiaries")
       .where({
@@ -20,6 +27,7 @@ const handleGetData = (db) => (req, res) => {
       .andWhereRaw("EXTRACT(MONTH FROM readings_date) = ?", [month])
       .andWhereRaw("EXTRACT(YEAR FROM readings_date) = ?", [year])
       .then((data) => {
+        console.log(data);
         data.forEach((value) => {
           const valueHour = new Date(value.readings_date).getHours();
           if (valueHour === hour) {
@@ -51,7 +59,8 @@ const handleGetData = (db) => (req, res) => {
         });
 
         db.select(
-          "temperature",
+          "external_temperature",
+          "internal_temperature",
           "humidity",
           "weight",
           "battery",
@@ -71,7 +80,7 @@ const handleGetData = (db) => (req, res) => {
             });
           })
           .catch(() => {
-            res.json("Unable to get any data:");
+            res.json("Unable to get any data");
           });
       })
       .catch(() => {

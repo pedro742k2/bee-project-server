@@ -16,19 +16,19 @@ const ChangeUserInfo = require("./Controllers/ChangeUserInfo");
 const AddHives = require("./Controllers/AddHives");
 const GetUsersData = require("./Controllers/GetUserData");
 
-/* LOCAL DATABASE CONNECTION 
+/* LOCAL DATABASE CONNECTION */
 const db = knex({
   client: "pg",
   connection: {
     host: "127.0.0.1",
     user: "postgres",
-    password: "",
+    password: "pedromanelabril7",
     database: "beeproject",
   },
 });
-const PORT = 5000; */
+const PORT = 5000;
 
-/* HEROKU DATABASE CONNECTION */
+/* HEROKU DATABASE CONNECTION 
 const db = knex({
   client: "pg",
   connection: {
@@ -38,7 +38,7 @@ const db = knex({
     },
   },
 });
-const PORT = process.env.PORT;
+const PORT = process.env.PORT; */
 
 const app = express();
 

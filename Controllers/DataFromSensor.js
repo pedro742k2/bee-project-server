@@ -17,15 +17,19 @@ const handleDataFromSensor = (db) => (req, res) => {
           msg: "Database already has data for this date",
         });
 
-      const temp = data.split("-")[0];
-      const hmdt = data.split("-")[1];
-      const weight = data.split("-")[2];
-      const battery = data.split("-")[3];
+      const splitedData = data.split("-");
+
+      const externalTemp = splitedData[0];
+      const internalTemp = splitedData[1];
+      const hmdt = splitedData[2];
+      const weight = splitedData[3];
+      const battery = splitedData[4];
 
       db("apiaries")
         .insert({
           hive_id: hiveId,
-          temperature: temp,
+          external_temperature: externalTemp,
+          internal_temperature: internalTemp,
           humidity: hmdt,
           weight,
           battery,
