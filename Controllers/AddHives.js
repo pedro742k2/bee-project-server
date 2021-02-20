@@ -20,7 +20,7 @@ const handleAddHives = (db) => async (req, res) => {
     res.json("Invalid input");
   } else {
     if (add) {
-      db("hives_info")
+      await db("hives_info")
         .select("hive_id")
         .where("hive_id", hiveId)
         .then((data) => {
