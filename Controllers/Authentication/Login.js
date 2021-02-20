@@ -13,9 +13,9 @@ const handleLogin = (db, bcrypt) => (req, res) => {
     .where("user_name", user)
     .orWhere("email", user)
     .then((user) => {
-      if (user)
+      if (user.length >= 1)
         return bcrypt.compare(password, user[0].password).then((result) => {
-          if (!result) return res.json("Wrong credentials");
+          if (!result) return res.status(401).json("Invalid password");
 
           const token = jwt.sign({ id: user[0].id }, process.env.TOKEN_SECRET);
 
@@ -28,11 +28,9 @@ const handleLogin = (db, bcrypt) => (req, res) => {
           });
         });
 
-      res.status(401).json("Wrong credentials");
+      res.status(401).json("Invalid username/email");
     })
-    .catch(() => {
-      res.status(500).json("Something went wrong");
-    });
+    .catch(() => res.status(500).json("Something went wrong"));
 };
 
 module.exports = {

@@ -23,13 +23,21 @@ const handleRegister = (db, bcrypt) => (req, res) => {
 
         const token = jwt.sign({ id: id }, process.env.TOKEN_SECRET);
 
-        res.header("auth-token", token).json({
-          user_name,
+        res.json({
+          token,
+          userName: user_name,
           email,
         });
       })
-      .catch(() => {
-        res.json("Something went wrong");
+      .catch((error) => {
+        if (
+          String(error).includes(
+            "duplicate key value violates unique constraint"
+          )
+        )
+          return res.status(401).json("This account already exists");
+
+        res.status(500).json("Something went wrong");
       });
   });
 };
