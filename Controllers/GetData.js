@@ -24,7 +24,7 @@ const handleGetData = (db) => (req, res) => {
         .where({
           hive_id: hiveId,
         })
-        .whereRaw("readings_date >= NOW() - INTERVAL '24 HOURS'")
+        .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
         .then((result) => {
           const target = result[result.length - 1];
 
