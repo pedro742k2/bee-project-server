@@ -9,16 +9,17 @@ const handleGetData = (db) => (req, res) => {
   const firstDataFromHours = [];
   let hour = 0;
 
+  const DATA_TO_EXTRACT =
+    ("external_temperature",
+    "internal_temperature",
+    "humidity",
+    "weight",
+    "battery",
+    "readings_date");
+
   switch (measurementType) {
     case "hourly":
-      db.select(
-        "external_temperature",
-        "internal_temperature",
-        "humidity",
-        "weight",
-        "battery",
-        "readings_date"
-      )
+      db.select(DATA_TO_EXTRACT)
         .orderBy("readings_date")
         .from("apiaries")
         .where({
@@ -26,24 +27,24 @@ const handleGetData = (db) => (req, res) => {
         })
         .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
         .then((result) => {
-          const target = result[result.length - 1];
+          db("apiaries")
+            .select(DATA_TO_EXTRACT)
+            .orderBy("readings_date")
+            .where({ hive_id: hiveId })
+            .then((data) => {
+              const target = data[data.length - 1];
 
-          res.json({
-            firstDataFromHours: result,
-            lastValues: target,
-          });
+              res.json({
+                firstDataFromHours: result,
+                lastValues: target,
+              });
+            })
+            .catch(() => res.status(500).json("Something went wrong"));
         })
         .catch(() => res.status(500).json("Something went wrong"));
       break;
     case "daily":
-      db.select(
-        "external_temperature",
-        "internal_temperature",
-        "humidity",
-        "weight",
-        "battery",
-        "readings_date"
-      )
+      db.select(DATA_TO_EXTRACT)
         .orderBy("readings_date")
         .from("apiaries")
         .where({
@@ -84,14 +85,7 @@ const handleGetData = (db) => (req, res) => {
             }
           });
 
-          db.select(
-            "external_temperature",
-            "internal_temperature",
-            "humidity",
-            "weight",
-            "battery",
-            "readings_date"
-          )
+          db.select(DATA_TO_EXTRACT)
             .from("apiaries")
             .where({
               hive_id: hiveId,
