@@ -9,14 +9,6 @@ const handleGetData = (db) => (req, res) => {
   const firstDataFromHours = [];
   let hour = 0;
 
-  const DATA_TO_EXTRACT =
-    ("external_temperature",
-    "internal_temperature",
-    "humidity",
-    "weight",
-    "battery",
-    "readings_date");
-
   switch (measurementType) {
     case "hourly":
       db.select(
