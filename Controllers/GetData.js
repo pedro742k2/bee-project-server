@@ -19,7 +19,14 @@ const handleGetData = (db) => (req, res) => {
 
   switch (measurementType) {
     case "hourly":
-      db.select(DATA_TO_EXTRACT)
+      db.select(
+        "external_temperature",
+        "internal_temperature",
+        "humidity",
+        "weight",
+        "battery",
+        "readings_date"
+      )
         .orderBy("readings_date")
         .from("apiaries")
         .where({
@@ -28,7 +35,14 @@ const handleGetData = (db) => (req, res) => {
         .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
         .then((result) => {
           db("apiaries")
-            .select(DATA_TO_EXTRACT)
+            .select(
+              "external_temperature",
+              "internal_temperature",
+              "humidity",
+              "weight",
+              "battery",
+              "readings_date"
+            )
             .orderBy("readings_date")
             .where({ hive_id: hiveId })
             .then((data) => {
@@ -44,7 +58,14 @@ const handleGetData = (db) => (req, res) => {
         .catch(() => res.status(500).json("Something went wrong"));
       break;
     case "daily":
-      db.select(DATA_TO_EXTRACT)
+      db.select(
+        "external_temperature",
+        "internal_temperature",
+        "humidity",
+        "weight",
+        "battery",
+        "readings_date"
+      )
         .orderBy("readings_date")
         .from("apiaries")
         .where({
@@ -85,7 +106,14 @@ const handleGetData = (db) => (req, res) => {
             }
           });
 
-          db.select(DATA_TO_EXTRACT)
+          db.select(
+            "external_temperature",
+            "internal_temperature",
+            "humidity",
+            "weight",
+            "battery",
+            "readings_date"
+          )
             .from("apiaries")
             .where({
               hive_id: hiveId,
