@@ -41,7 +41,7 @@ const handleGetData = (db) => (req, res) => {
               const target = data[data.length - 1];
 
               res.json({
-                firstDataFromHours: result,
+                data: result,
                 lastValues: target,
               });
             })
@@ -107,15 +107,13 @@ const handleGetData = (db) => (req, res) => {
             "readings_date"
           )
             .from("apiaries")
-            .where({
-              hive_id: hiveId,
-            })
+            .where({ hive_id: hiveId })
             .orderBy("readings_date")
             .then((lastValues) => {
               const target = lastValues[lastValues.length - 1];
 
               res.json({
-                firstDataFromHours,
+                data: firstDataFromHours,
                 lastValues: target,
               });
             })
@@ -128,7 +126,26 @@ const handleGetData = (db) => (req, res) => {
         });
       break;
     case "weekly":
-      res.json("not available");
+      db("apiaries")
+        .select(
+          "external_temperature",
+          "internal_temperature",
+          "humidity",
+          "weight",
+          "battery",
+          "readings_date"
+        )
+        .where({ hive_id: hiveId })
+        .whereRaw("readings_date >= NOW() - INTERVAL '7 DAYS'")
+        .andWhereRaw("readings_date <= NOW()")
+        .andWhereRaw("EXTRACT(HOUR FROM readings_date) >= 0")
+        .andWhereRaw("EXTRACT(HOUR FROM readings_date) <= 8")
+        .orderBy("readings_date")
+        .then((result) => {
+          // Obter todos os dados entre as 00:00h e as 08:00h dos últimos 7 dias
+          console.log(result);
+        });
+
       break;
     case "monthly":
       res.json("not available");
