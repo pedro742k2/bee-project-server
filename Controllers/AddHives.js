@@ -14,10 +14,10 @@ const handleAddHives = (db) => async (req, res) => {
     .catch(() => false);
 
   if (add && exists.length === 0) {
-    res.json("Hive not registered");
+    res.status(400).json("Hive not registered");
     return false;
   } else if (IdApHv.length < 5 && add === true) {
-    res.json("Invalid input");
+    res.status(400).json("Invalid input");
   } else {
     if (add) {
       await db("hives_info")
@@ -37,7 +37,7 @@ const handleAddHives = (db) => async (req, res) => {
               })
               .catch(db.rollback);
           } else {
-            db("hives_info")
+            await db("hives_info")
               .where("hive_id", hiveId)
               .update({
                 apiary_number: apiaryNumber,
