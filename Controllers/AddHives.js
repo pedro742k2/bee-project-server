@@ -37,7 +37,7 @@ const handleAddHives = (db) => async (req, res) => {
               })
               .catch(db.rollback);
           } else {
-            await db("hives_info")
+            db("hives_info")
               .where("hive_id", hiveId)
               .update({
                 apiary_number: apiaryNumber,
