@@ -31,9 +31,9 @@ const handleAddHives = (db) => async (req, res) => {
                 apiary_number: apiaryNumber,
                 hive_number: hiveNumber,
               })
-              .then(async () => {
+              .then(() => {
                 edited = true;
-                await db.commit;
+                db.commit;
               })
               .catch(db.rollback);
           } else {
@@ -43,9 +43,9 @@ const handleAddHives = (db) => async (req, res) => {
                 apiary_number: apiaryNumber,
                 hive_number: hiveNumber,
               })
-              .then(async () => {
+              .then(() => {
                 edited = true;
-                await db.commit;
+                db.commit;
               })
               .catch(db.rollback);
           }
