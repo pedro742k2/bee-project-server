@@ -121,9 +121,7 @@ const handleGetData = (db) => (req, res) => {
               res.json("Unable to get any data");
             });
         })
-        .catch(() => {
-          res.json(`Unable to get data`);
-        });
+        .catch(() => res.status(500).json("Something went wrong"));
       break;
     case "weekly":
       db("apiaries")
@@ -142,13 +140,119 @@ const handleGetData = (db) => (req, res) => {
         .andWhereRaw("EXTRACT(HOUR FROM readings_date) <= 8")
         .orderBy("readings_date")
         .then((result) => {
-          // Obter todos os dados entre as 00:00h e as 08:00h dos últimos 7 dias
-          console.log(result);
-        });
+          try {
+            let lastItem = result[0];
+            const valuesToSend = [];
+
+            result.forEach((item) => {
+              const lastItemTime = new Date(lastItem.readings_date).getDate();
+              const actualItemTime = new Date(item.readings_date).getDate();
+
+              if (
+                lastItemTime < actualItemTime ||
+                lastItemTime - actualItemTime >= 2
+              ) {
+                valuesToSend.push(lastItem);
+              }
+
+              lastItem = item;
+            });
+
+            valuesToSend.push(result[result.length - 1]);
+
+            db.select(
+              "external_temperature",
+              "internal_temperature",
+              "humidity",
+              "weight",
+              "battery",
+              "readings_date"
+            )
+              .from("apiaries")
+              .where({ hive_id: hiveId })
+              .orderBy("readings_date")
+              .then((lastValues) => {
+                const target = lastValues[lastValues.length - 1];
+
+                res.json({
+                  data: valuesToSend,
+                  lastValues: target,
+                });
+              })
+              .catch(() => {
+                res.json("Unable to get any data");
+              });
+          } catch {
+            res.status(500).json("Something went wrong");
+          }
+        })
+        .catch(() => res.status(500).json("Something went wrong"));
 
       break;
     case "monthly":
-      res.json("not available");
+      db("apiaries")
+        .select(
+          "external_temperature",
+          "internal_temperature",
+          "humidity",
+          "weight",
+          "battery",
+          "readings_date"
+        )
+        .where({ hive_id: hiveId })
+        .whereRaw("readings_date >= NOW() - INTERVAL '31 DAYS'")
+        .andWhereRaw("readings_date <= NOW()")
+        .andWhereRaw("EXTRACT(HOUR FROM readings_date) >= 0")
+        .andWhereRaw("EXTRACT(HOUR FROM readings_date) <= 8")
+        .orderBy("readings_date")
+        .then((result) => {
+          try {
+            let lastItem = result[0];
+            const valuesToSend = [];
+
+            result.forEach((item) => {
+              const lastItemTime = new Date(lastItem.readings_date).getDate();
+              const actualItemTime = new Date(item.readings_date).getDate();
+
+              if (
+                lastItemTime < actualItemTime ||
+                lastItemTime - actualItemTime >= 2
+              ) {
+                valuesToSend.push(lastItem);
+              }
+
+              lastItem = item;
+            });
+
+            valuesToSend.push(result[result.length - 1]);
+
+            db.select(
+              "external_temperature",
+              "internal_temperature",
+              "humidity",
+              "weight",
+              "battery",
+              "readings_date"
+            )
+              .from("apiaries")
+              .where({ hive_id: hiveId })
+              .orderBy("readings_date")
+              .then((lastValues) => {
+                const target = lastValues[lastValues.length - 1];
+
+                res.json({
+                  data: valuesToSend,
+                  lastValues: target,
+                });
+              })
+              .catch(() => {
+                res.json("Unable to get any data");
+              });
+          } catch {
+            res.status(500).json("Something went wrong");
+          }
+        })
+        .catch(() => res.status(500).json("Something went wrong"));
       break;
     default:
       res.json("Invalid resource");
