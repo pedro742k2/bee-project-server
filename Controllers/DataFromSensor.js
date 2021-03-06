@@ -20,12 +20,12 @@ const handleDataFromSensor = (db) => (req, res) => {
 
       const splitedData = data.split("-");
 
-      const externalTemp = splitedData[0];
+      const weight = splitedData[0];
       const internalTemp = splitedData[1];
-      const hmdt = splitedData[2];
-      const weight = splitedData[3];
-      const battery = splitedData[4];
-      const solarVoltage = splitedData[5];
+      const externalTemp = splitedData[2];
+      const hmdt = splitedData[3];
+      const solarVoltage = splitedData[4];
+      const battery = splitedData[5];
 
       db("apiaries")
         .insert({
