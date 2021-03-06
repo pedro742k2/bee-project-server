@@ -17,6 +17,7 @@ const handleGetData = (db) => (req, res) => {
         "humidity",
         "weight",
         "battery",
+        "solar_panel_voltage",
         "readings_date"
       )
         .orderBy("readings_date")
