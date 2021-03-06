@@ -2,6 +2,7 @@ const handleDataFromSensor = (db) => (req, res) => {
   const { hiveId, readDate, data } = req.body;
 
   const readOn = readDate.split("-");
+
   const readings_date = `${readOn[0]}/${readOn[1]}/${readOn[2]} ${readOn[3]}:${readOn[4]}`;
 
   db.select("readings_date")
@@ -24,6 +25,7 @@ const handleDataFromSensor = (db) => (req, res) => {
       const hmdt = splitedData[2];
       const weight = splitedData[3];
       const battery = splitedData[4];
+      const solarVoltage = splitedData[5];
 
       db("apiaries")
         .insert({
@@ -33,6 +35,7 @@ const handleDataFromSensor = (db) => (req, res) => {
           humidity: hmdt,
           weight,
           battery,
+          solar_panel_voltage: solarVoltage,
           readings_date,
         })
         .returning("hive_id")

@@ -33,6 +33,7 @@ const handleGetData = (db) => (req, res) => {
               "humidity",
               "weight",
               "battery",
+              "solar_panel_voltage",
               "readings_date"
             )
             .orderBy("readings_date")
@@ -56,6 +57,7 @@ const handleGetData = (db) => (req, res) => {
         "humidity",
         "weight",
         "battery",
+        "solar_panel_voltage",
         "readings_date"
       )
         .orderBy("readings_date")
@@ -85,6 +87,7 @@ const handleGetData = (db) => (req, res) => {
                   firstDataFromHours.push({
                     external_temperature: "0",
                     internal_temperature: "0",
+                    solar_panel_voltage: "0",
                     humidity: "0",
                     weight: "0",
                     battery: "0",
@@ -104,6 +107,7 @@ const handleGetData = (db) => (req, res) => {
             "humidity",
             "weight",
             "battery",
+            "solar_panel_voltage",
             "readings_date"
           )
             .from("apiaries")
@@ -131,6 +135,7 @@ const handleGetData = (db) => (req, res) => {
           "humidity",
           "weight",
           "battery",
+          "solar_panel_voltage",
           "readings_date"
         )
         .where({ hive_id: hiveId })
@@ -166,6 +171,7 @@ const handleGetData = (db) => (req, res) => {
               "humidity",
               "weight",
               "battery",
+              "solar_panel_voltage",
               "readings_date"
             )
               .from("apiaries")
@@ -197,6 +203,7 @@ const handleGetData = (db) => (req, res) => {
           "humidity",
           "weight",
           "battery",
+          "solar_panel_voltage",
           "readings_date"
         )
         .where({ hive_id: hiveId })
@@ -232,6 +239,7 @@ const handleGetData = (db) => (req, res) => {
               "humidity",
               "weight",
               "battery",
+              "solar_panel_voltage",
               "readings_date"
             )
               .from("apiaries")
