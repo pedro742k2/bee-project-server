@@ -45,7 +45,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/access_history", (req, res) => {
+app.post("/access_history", (req, res) => {
   const { user_info } = req;
 
   db("access_history").insert({
