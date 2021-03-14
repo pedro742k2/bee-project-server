@@ -45,17 +45,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post("/access_history", (req, res) => {
-  const { user_info } = req;
-
-  db("access_history").insert({
-    user_info,
-    access_on: new Date(),
-  });
-
-  res.status(200).json("Added contact info");
-});
-
 /* Get readings from the Arduino */
 app.post("/data-from-sensor", DataFromSensor.handleDataFromSensor(db));
 
