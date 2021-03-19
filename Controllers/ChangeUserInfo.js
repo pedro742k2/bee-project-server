@@ -6,7 +6,6 @@ const handleChangeUserInfo = (db) => (req, res) => {
     .update(field, value)
     .returning(["user_name", "email", "name", "hives_id"])
     .then((data) => {
-      console.log(data);
       res.json(data[0]);
     })
     .catch(() => {
