@@ -3,7 +3,7 @@ const handleAddTareWeight = (db) => (req, res) => {
 
   db("hives_info")
     .where("hive_id", hiveId)
-    .update(tare_weight, tareWeight)
+    .update("tare_weight", tareWeight)
     .returning(["tare_weight"])
     .then((data) => {
       res.json(data);
