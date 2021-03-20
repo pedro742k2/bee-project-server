@@ -8,7 +8,7 @@ const handleAddTareWeight = (db) => (req, res) => {
     .then((data) => {
       res.json(data);
     })
-    .catch(res.status(400).json("Bad syntax"));
+    .catch(() => res.status(400).json("Bad syntax"));
 };
 
 module.exports = {
