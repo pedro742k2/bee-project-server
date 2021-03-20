@@ -42,10 +42,20 @@ const handleGetData = (db) => (req, res) => {
             .then((data) => {
               const target = data[data.length - 1];
 
-              res.json({
-                data: result,
-                lastValues: target,
-              });
+              db("hives_info")
+                .select("tare_weight")
+                .where("hive_id", hiveId)
+                .then((tare_weight) => {
+                  res
+                    .json({
+                      data: result,
+                      lastValues: target,
+                      tareWeight: tare_weight,
+                    })
+                    .catch(() =>
+                      res.status(500).json("Unable to get any data")
+                    );
+                });
             })
             .catch(() => res.status(500).json("Something went wrong"));
         })
@@ -189,10 +199,20 @@ const handleGetData = (db) => (req, res) => {
               .then((lastValues) => {
                 const target = lastValues[lastValues.length - 1];
 
-                res.json({
-                  data: valuesToSend,
-                  lastValues: target,
-                });
+                db("hives_info")
+                  .select("tare_weight")
+                  .where("hive_id", hiveId)
+                  .then((tare_weight) => {
+                    res
+                      .json({
+                        data: valuesToSend,
+                        lastValues: target,
+                        tareWeight: tare_weight,
+                      })
+                      .catch(() =>
+                        res.status(500).json("Unable to get any data")
+                      );
+                  });
               })
               .catch(() => {
                 res.json("Unable to get any data");
@@ -257,10 +277,20 @@ const handleGetData = (db) => (req, res) => {
               .then((lastValues) => {
                 const target = lastValues[lastValues.length - 1];
 
-                res.json({
-                  data: valuesToSend,
-                  lastValues: target,
-                });
+                db("hives_info")
+                  .select("tare_weight")
+                  .where("hive_id", hiveId)
+                  .then((tare_weight) => {
+                    res
+                      .json({
+                        data: valuesToSend,
+                        lastValues: target,
+                        tareWeight: tare_weight,
+                      })
+                      .catch(() =>
+                        res.status(500).json("Unable to get any data")
+                      );
+                  });
               })
               .catch(() => {
                 res.json("Unable to get any data");
