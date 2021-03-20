@@ -15,6 +15,7 @@ const GetData = require("./Controllers/GetData");
 const ChangeUserInfo = require("./Controllers/ChangeUserInfo");
 const AddHives = require("./Controllers/AddHives");
 const GetUsersData = require("./Controllers/GetUserData");
+const AddTareWeight = require("./Controllers/AddTareWeight");
 
 /* LOCAL DATABASE CONNECTION 
 const db = knex({
@@ -62,6 +63,8 @@ app.post("/register", Register.handleRegister(db, bcrypt));
 
 /* Add or remove hives */
 app.put("/add-hives", verify, AddHives.handleAddHives(db));
+
+app.put("/add-tare", verify, AddTareWeight(db));
 
 /* Set a name for a specific user */
 app.put("/change-user-info", verify, ChangeUserInfo.handleChangeUserInfo(db));

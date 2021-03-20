@@ -30,6 +30,7 @@ const handleAddHives = (db) => async (req, res) => {
                 hive_id: hiveId,
                 apiary_number: apiaryNumber,
                 hive_number: hiveNumber,
+                tare_weight: 0,
               })
               .then(() => {
                 edited = true;
