@@ -64,7 +64,7 @@ app.post("/register", Register.handleRegister(db, bcrypt));
 /* Add or remove hives */
 app.put("/add-hives", verify, AddHives.handleAddHives(db));
 
-app.put("/add-tare", verify, AddTareWeight(db));
+app.put("/add-tare", verify, AddTareWeight.handleAddTareWeight(db));
 
 /* Set a name for a specific user */
 app.put("/change-user-info", verify, ChangeUserInfo.handleChangeUserInfo(db));
