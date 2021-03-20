@@ -117,14 +117,22 @@ const handleGetData = (db) => (req, res) => {
             .then((lastValues) => {
               const target = lastValues[lastValues.length - 1];
 
-              res.json({
-                data: firstDataFromHours,
-                lastValues: target,
-              });
+              db("hives_info")
+                .select("tare_weight")
+                .where("hive_id", hiveId)
+                .then((tare_weight) => {
+                  res
+                    .json({
+                      data: firstDataFromHours,
+                      lastValues: target,
+                      tareWeight: tare_weight,
+                    })
+                    .catch(() =>
+                      res.status(500).json("Unable to get any data")
+                    );
+                });
             })
-            .catch(() => {
-              res.json("Unable to get any data");
-            });
+            .catch(() => res.json("Unable to get any data"));
         })
         .catch(() => res.status(500).json("Something went wrong"));
       break;
