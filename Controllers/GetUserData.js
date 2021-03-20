@@ -10,7 +10,7 @@ const handleGetUsersData = (db) => (req, res) => {
     .then((hivesInfo) => {
       res.json(hivesInfo);
     })
-    .catch(res.status(400).json("Unable to consult the database"));
+    .catch(() => res.status(400).json("Unable to consult the database"));
 };
 
 module.exports = {
