@@ -1,5 +1,5 @@
 const handleGetData = (db) => (req, res) => {
-  const { hiveId, currentDate, measurementType } = req.body;
+  const { hiveId, currentDate, measurementType, clientDate } = req.body;
 
   const date = currentDate.split("-");
   const day = date[2];
@@ -11,9 +11,6 @@ const handleGetData = (db) => (req, res) => {
 
   switch (measurementType) {
     case "hourly":
-      const lastHour = new Date();
-      lastHour.setHours(lastHour.getHours() - 1);
-
       db.select(
         "external_temperature",
         "internal_temperature",
@@ -29,12 +26,10 @@ const handleGetData = (db) => (req, res) => {
         })
         // .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
         .andWhere(function () {
-          this.where("readings_date", ">=", lastHour);
+          this.where("readings_date", ">=", clientDate);
         })
         .orderBy("readings_date")
         .then((result) => {
-          console.log(result, lastHour);
-
           db("apiaries")
             .select(
               "external_temperature",
