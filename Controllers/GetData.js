@@ -27,6 +27,7 @@ const handleGetData = (db) => (req, res) => {
         })
         .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
         .then((result) => {
+          console.log(result);
           db("apiaries")
             .select(
               "external_temperature",
