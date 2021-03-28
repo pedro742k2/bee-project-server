@@ -33,7 +33,8 @@ const handleGetData = (db) => (req, res) => {
         })
         .orderBy("readings_date")
         .then((result) => {
-          console.log(result);
+          console.log(result, lastHour);
+
           db("apiaries")
             .select(
               "external_temperature",
