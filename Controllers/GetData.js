@@ -20,12 +20,12 @@ const handleGetData = (db) => (req, res) => {
         "solar_panel_voltage",
         "readings_date"
       )
-        .orderBy("readings_date")
         .from("apiaries")
         .where({
           hive_id: hiveId,
         })
         .whereRaw("readings_date >= NOW() - INTERVAL '1 HOURS'")
+        .orderBy("readings_date")
         .then((result) => {
           console.log(result);
           db("apiaries")
